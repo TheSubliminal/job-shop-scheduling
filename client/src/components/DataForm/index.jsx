@@ -3,12 +3,11 @@ import { Button, Checkbox, FormControlLabel, Typography } from '@material-ui/cor
 
 import InputDataTable from '../JobDataTable';
 import NumOfRandomJobsInput from '../NumOfRandomJobsInput';
-
-const defaultNumOfRandomJobs = 5;
+import defaults from '../../config/default.json';
 
 const DataForm = () => {
   const [isRandom, setIsRandom] = useState(false);
-  const [numOfRandomJobs, setNumOfRandomJobs] = useState(defaultNumOfRandomJobs);
+  const [numOfRandomJobs, setNumOfRandomJobs] = useState(defaults.numOfRandomJobs);
   const [jobs, setJobs] = useState([]);
 
   const toggleIsRandom = () => setIsRandom(prevIsRandom => !prevIsRandom);
@@ -16,8 +15,8 @@ const DataForm = () => {
   const onAddJob = () => {
     const newJob = {
       id: jobs.length + 1,
-      duration: 0,
-      deadline: 0
+      duration: defaults.duration,
+      deadline: defaults.deadline
     };
 
     setJobs(prevJobs => [...prevJobs, newJob]);
