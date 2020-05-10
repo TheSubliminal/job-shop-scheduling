@@ -4,11 +4,13 @@ import TextField from '@material-ui/core/TextField';
 
 const NumOfRandomJobsInput = ({ numOfRandomJobs, onChange }) => {
   const onInputChange = (event) => {
-    const value = event.target.value;
+    const value = parseInt(event.target.value, 10);
 
-    if (value > 0) {
-      onChange(value);
+    if (isNaN(value) && value < 0) {
+      return;
     }
+
+    onChange(value);
   };
 
   return (
