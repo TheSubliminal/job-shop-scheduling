@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
 
 import InputDataTable from '../JobDataTable';
 import NumOfRandomJobsInput from '../NumOfRandomJobsInput';
 import defaults from '../../config/default.json';
 
-const DataForm = () => {
+const DataForm = ({ onSaveJobData }) => {
   const [isRandom, setIsRandom] = useState(false);
   const [numOfRandomJobs, setNumOfRandomJobs] = useState(defaults.numOfRandomJobs);
   const [jobs, setJobs] = useState([]);
@@ -34,13 +35,16 @@ const DataForm = () => {
     });
   };
 
-  const submitData = () => null;
+  const saveData = () => {
+    if (isRandom) {
+      onSaveJobData(numOfRandomJobs);
+    } else if (jobs.length > 0) {
+      onSaveJobData(jobs);
+    }
+  };
 
   return (
     <>
-      <Typography variant='h4'>
-        Fill algorithm data
-      </Typography>
       <FormControlLabel
         control={
           <Checkbox
@@ -68,9 +72,13 @@ const DataForm = () => {
         )
       }
       <br />
-      <Button onClick={submitData}>Submit</Button>
+      <Button onClick={saveData}>Save</Button>
     </>
   );
+};
+
+DataForm.propTypes = {
+  onSaveJobData: PropTypes.func.isRequired
 };
 
 export default DataForm;
