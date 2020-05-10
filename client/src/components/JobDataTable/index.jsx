@@ -42,6 +42,7 @@ const InputDataTable = ({ jobs, onAddJob, onChangeJob, onRemoveJob }) => {
             <TableCell>ID</TableCell>
             <TableCell>Duration</TableCell>
             <TableCell>Deadline</TableCell>
+            {editable && <TableCell />}
           </TableRow>
         </TableHead>
         <TableBody>
