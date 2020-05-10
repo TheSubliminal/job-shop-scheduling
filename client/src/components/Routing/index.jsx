@@ -1,7 +1,14 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-const Routing = () => {
-  return <div />;
-};
+import AlgorithmDashboard from '../AlgorithmDashboard';
+
+const Routing = () => (
+  <Switch>
+    <Route exact path='/'>
+      <AlgorithmDashboard />
+    </Route>
+  </Switch>
+);
 
 export default Routing;
