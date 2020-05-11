@@ -1,33 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Field } from 'formik';
 import TextField from '@material-ui/core/TextField';
 
-const NumOfRandomJobsInput = ({ numOfRandomJobs, onChange }) => {
-  const onInputChange = (event) => {
-    const value = parseInt(event.target.value, 10);
+import styles from './styles.module.scss';
 
-    if (isNaN(value) || value < 0) {
-      return;
-    }
-
-    onChange(value);
-  };
-
-  return (
-    <TextField
-      required
-      value={numOfRandomJobs}
-      label='Number of random jobs'
-      type='number'
-      size='small'
-      onChange={onInputChange}
-    />
-  );
-};
-
-NumOfRandomJobsInput.propTypes = {
-  numOfRandomJobs: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
-};
+const NumOfRandomJobsInput = () => (
+  <Field name='numOfRandomJobs'>
+    {({ field, meta }) => (
+      <TextField
+        label='Number of random jobs'
+        type='number'
+        size='small'
+        required
+        error={!!(meta.touched && meta.error)}
+        helperText={meta.touched && meta.error}
+        className={styles.numOfRandomJobs}
+        {...field}
+      />
+    )}
+  </Field>
+);
 
 export default NumOfRandomJobsInput;
