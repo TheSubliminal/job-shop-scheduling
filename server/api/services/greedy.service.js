@@ -2,14 +2,14 @@ const { greedy } = require('../../algorithms/greedy');
 const { generateRandomJobs } = require('../../helpers/jobFactory.helper');
 const { calculateDelay } = require('../../helpers/delayCalculator.helper');
 
-const getGreedyDelay = (numberOfJobs) => {
+const getGreedyResult = (numberOfJobs) => {
   const jobs = generateRandomJobs(numberOfJobs);
   const orderedJobs = greedy(jobs);
-  const delay = calculateDelay(orderedJobs);
+  const totalDelay = calculateDelay(orderedJobs);
 
-  return { delay };
+  return { totalDelay, orderedJobs };
 };
 
 module.exports = {
-  getGreedyDelay
+  getGreedyResult
 };
