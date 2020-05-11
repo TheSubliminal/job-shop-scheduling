@@ -6,7 +6,7 @@ const NumOfRandomJobsInput = ({ numOfRandomJobs, onChange }) => {
   const onInputChange = (event) => {
     const value = parseInt(event.target.value, 10);
 
-    if (isNaN(value) && value < 0) {
+    if (isNaN(value) || value < 0) {
       return;
     }
 
@@ -19,7 +19,7 @@ const NumOfRandomJobsInput = ({ numOfRandomJobs, onChange }) => {
       value={numOfRandomJobs}
       label='Number of random jobs'
       type='number'
-      variant='outlined'
+      size='small'
       onChange={onInputChange}
     />
   );

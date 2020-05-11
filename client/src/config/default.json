@@ -1,5 +1,10 @@
 {
   "numOfRandomJobs": 5,
   "duration": 0,
-  "deadline": 0
+  "deadline": 0,
+  "algorithm": "greedy",
+  "numOfAnts": 15,
+  "pheromoneSignificanceCoef": 1.2,
+  "heuristicSignificanceCoef": 1.5,
+  "pheromoneEvaporationCoef": 0.1
 }

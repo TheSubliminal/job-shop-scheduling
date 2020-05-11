@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
 
 import algorithmsConfig from '../../config/algorithms.json';
 
@@ -11,16 +11,24 @@ const AlgorithmChoice = ({ selectedAlgorithm, onSelectAlgorithm }) => {
   };
 
   return (
-    <RadioGroup aria-label='Algorithms' value={selectedAlgorithm} onChange={onChange}>
-      {Object.entries(algorithmsConfig).map(([key, name]) => (
-        <FormControlLabel
-          key={key}
-          value={key}
-          control={<Radio />}
-          label={name}
-        />
-      ))}
-    </RadioGroup>
+    <>
+      <Typography>Choose algorithm</Typography>
+      <RadioGroup
+        aria-label='Algorithms'
+        value={selectedAlgorithm}
+        name='algorithm'
+        onChange={onChange}
+      >
+        {Object.values(algorithmsConfig).map(({ key, name }) => (
+          <FormControlLabel
+            key={key}
+            value={key}
+            control={<Radio />}
+            label={name}
+          />
+        ))}
+      </RadioGroup>
+    </>
   );
 };
 
