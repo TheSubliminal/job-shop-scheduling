@@ -1,5 +1,5 @@
-const greedyRoutes = require('./greedy.routes');
+const algorithmsRoutes = require('./algorithms.routes');
 
 module.exports = (app) => {
-  app.use('/api/greedy', greedyRoutes);
+  app.use('/api/algorithms', algorithmsRoutes);
 };
