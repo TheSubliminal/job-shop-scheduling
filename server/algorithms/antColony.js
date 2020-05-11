@@ -1,12 +1,13 @@
 const { calculateDelay } = require('../helpers/delayCalculator.helper');
+const defaults = require('../config/default.json');
 
 const antColony = (params) => {
   const {
     jobs,
-    numOfAnts,
-    pheromoneSignificanceCoef,
-    heuristicSignificanceCoef,
-    pheromoneEvaporationCoef
+    numOfAnts = defaults.numOfAnts,
+    pheromoneSignificanceCoef = defaults.pheromoneSignificanceCoef,
+    heuristicSignificanceCoef = defaults.heuristicSignificanceCoef,
+    pheromoneEvaporationCoef = defaults.pheromoneEvaporationCoef
   } = params;
 
   const staticRandomParameter = Math.random().toFixed(6);
