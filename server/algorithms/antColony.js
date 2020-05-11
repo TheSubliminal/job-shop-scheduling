@@ -34,11 +34,10 @@ const antColony = (params) => {
     const newSchedule = new Array(currentScheduleRecord.length);
 
     for (let i = 0; i < notVisitedJobs.length; i++) {
-
       const notVisitedJobsStatistics = [];
       for (let n = 0; n < notVisitedJobs.length; n++) {
         if (notVisitedJobs[n] !== undefined) {
-          notVisitedJobsStatistics[n] = pheromoneMatrix[i][n] ** pheromoneSignificanceCoef * heuristicMatrix[i][n] ** heuristicSignificanceCoef;
+          notVisitedJobsStatistics[n] = (pheromoneMatrix[i][n] ** pheromoneSignificanceCoef) * (heuristicMatrix[i][n] ** heuristicSignificanceCoef);
         } else {
           notVisitedJobsStatistics[n] = 0;
         }
