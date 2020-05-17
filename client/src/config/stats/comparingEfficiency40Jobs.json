@@ -1,0 +1,182 @@
+[
+  {
+    "jobRun": 1,
+    "greedyResult": 1631,
+    "antColonyResult": 1629,
+    "schildFredmanResult": 1251
+  },
+  {
+    "jobRun": 2,
+    "greedyResult": 3192,
+    "antColonyResult": 3188,
+    "schildFredmanResult": 2682
+  },
+  {
+    "jobRun": 3,
+    "greedyResult": 2398,
+    "antColonyResult": 2390,
+    "schildFredmanResult": 1961
+  },
+  {
+    "jobRun": 4,
+    "greedyResult": 2269,
+    "antColonyResult": 2269,
+    "schildFredmanResult": 2288
+  },
+  {
+    "jobRun": 5,
+    "greedyResult": 831,
+    "antColonyResult": 827,
+    "schildFredmanResult": 1224
+  },
+  {
+    "jobRun": 6,
+    "greedyResult": 1583,
+    "antColonyResult": 1582,
+    "schildFredmanResult": 1528
+  },
+  {
+    "jobRun": 7,
+    "greedyResult": 1955,
+    "antColonyResult": 1950,
+    "schildFredmanResult": 1490
+  },
+  {
+    "jobRun": 8,
+    "greedyResult": 831,
+    "antColonyResult": 824,
+    "schildFredmanResult": 937
+  },
+  {
+    "jobRun": 9,
+    "greedyResult": 472,
+    "antColonyResult": 464,
+    "schildFredmanResult": 627
+  },
+  {
+    "jobRun": 10,
+    "greedyResult": 517,
+    "antColonyResult": 510,
+    "schildFredmanResult": 863
+  },
+  {
+    "jobRun": 11,
+    "greedyResult": 929,
+    "antColonyResult": 923,
+    "schildFredmanResult": 1198
+  },
+  {
+    "jobRun": 12,
+    "greedyResult": 424,
+    "antColonyResult": 421,
+    "schildFredmanResult": 708
+  },
+  {
+    "jobRun": 13,
+    "greedyResult": 1107,
+    "antColonyResult": 1098,
+    "schildFredmanResult": 891
+  },
+  {
+    "jobRun": 14,
+    "greedyResult": 1698,
+    "antColonyResult": 1690,
+    "schildFredmanResult": 1855
+  },
+  {
+    "jobRun": 15,
+    "greedyResult": 1817,
+    "antColonyResult": 1814,
+    "schildFredmanResult": 1515
+  },
+  {
+    "jobRun": 16,
+    "greedyResult": 747,
+    "antColonyResult": 745,
+    "schildFredmanResult": 1060
+  },
+  {
+    "jobRun": 17,
+    "greedyResult": 1125,
+    "antColonyResult": 1125,
+    "schildFredmanResult": 1342
+  },
+  {
+    "jobRun": 18,
+    "greedyResult": 987,
+    "antColonyResult": 978,
+    "schildFredmanResult": 1089
+  },
+  {
+    "jobRun": 19,
+    "greedyResult": 46,
+    "antColonyResult": 45,
+    "schildFredmanResult": 335
+  },
+  {
+    "jobRun": 20,
+    "greedyResult": 2048,
+    "antColonyResult": 2038,
+    "schildFredmanResult": 1900
+  },
+  {
+    "jobRun": 21,
+    "greedyResult": 139,
+    "antColonyResult": 134,
+    "schildFredmanResult": 557
+  },
+  {
+    "jobRun": 22,
+    "greedyResult": 492,
+    "antColonyResult": 491,
+    "schildFredmanResult": 773
+  },
+  {
+    "jobRun": 23,
+    "greedyResult": 474,
+    "antColonyResult": 472,
+    "schildFredmanResult": 993
+  },
+  {
+    "jobRun": 24,
+    "greedyResult": 2001,
+    "antColonyResult": 1995,
+    "schildFredmanResult": 1576
+  },
+  {
+    "jobRun": 25,
+    "greedyResult": 2450,
+    "antColonyResult": 2442,
+    "schildFredmanResult": 2048
+  },
+  {
+    "jobRun": 26,
+    "greedyResult": 641,
+    "antColonyResult": 632,
+    "schildFredmanResult": 913
+  },
+  {
+    "jobRun": 27,
+    "greedyResult": 1022,
+    "antColonyResult": 1015,
+    "schildFredmanResult": 1416
+  },
+  {
+    "jobRun": 28,
+    "greedyResult": 1599,
+    "antColonyResult": 1594,
+    "schildFredmanResult": 1569
+  },
+  {
+    "jobRun": 29,
+    "greedyResult": 525,
+    "antColonyResult": 519,
+    "schildFredmanResult": 981
+  },
+  {
+    "jobRun": 30,
+    "greedyResult": 2302,
+    "antColonyResult": 2296,
+    "schildFredmanResult": 2167
+  }
+]
