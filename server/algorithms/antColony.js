@@ -43,7 +43,7 @@ const antColony = (params) => {
           notVisitedJobsStatistics[n] = 0;
         }
       }
-      const denominator = notVisitedJobsStatistics.reduce((sum, curr) =>  sum + curr, 0);
+      const denominator = notVisitedJobsStatistics.reduce((sum, curr) => sum + curr, 0);
       const probabilities = [];
       for (let j = 0; j < notVisitedJobs.length; j++) {
         if (notVisitedJobs[j] !== undefined) {
@@ -86,7 +86,7 @@ const antColony = (params) => {
       currentTotalDelayRecord = newTotalDelay;
     }
   }
-  return { currentTotalDelayRecord, currentScheduleRecord };
+  return currentScheduleRecord;
 };
 
 module.exports = {

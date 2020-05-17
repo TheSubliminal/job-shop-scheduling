@@ -1,4 +1,4 @@
-const calculateDelay = (jobs) => {
+const calculateJobEndTimes = (jobs) => {
   const endTimes = [];
 
   for (let i = 0; i < jobs.length; i++) {
@@ -8,6 +8,12 @@ const calculateDelay = (jobs) => {
       endTimes[i] = jobs[i].duration;
     }
   }
+
+  return endTimes;
+};
+
+const calculateDelay = (jobs) => {
+  const endTimes = calculateJobEndTimes(jobs);
 
   const delays = jobs.map((job, index) => {
     const jobEndTime = endTimes[index];
@@ -22,5 +28,6 @@ const calculateDelay = (jobs) => {
 
 
 module.exports = {
+  calculateJobEndTimes,
   calculateDelay
 };
