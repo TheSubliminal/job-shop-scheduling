@@ -7,7 +7,7 @@ const generateRandomJobs = (numberOfJobs = 10) => {
     jobs[i] = {
       id: i + 1,
       duration: Math.round(Math.random() * defaults.randomMaxJobDuration),
-      deadline: Math.round(Math.random() * (i + 1) * defaults.randomMaxJobDuration)
+      deadline: Math.round(Math.random() * (i + 1) * defaults.randomMaxJobDuration + 1)
     };
   }
 
