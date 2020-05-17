@@ -1,4 +1,4 @@
-const { calculateDelay } = require('../helpers/delayCalculator.helper');
+const { calculateScheduleDelay } = require('../helpers/delayCalculator.helper');
 const defaults = require('../config/default.json');
 
 const antColony = (params) => {
@@ -14,7 +14,7 @@ const antColony = (params) => {
 
   let currentScheduleRecord = [...jobs];
   currentScheduleRecord.sort((jobA, jobB) => jobA.deadline - jobB.deadline);
-  let currentTotalDelayRecord = calculateDelay(currentScheduleRecord);
+  let currentTotalDelayRecord = calculateScheduleDelay(currentScheduleRecord);
 
   const defaultPheromoneVolume = 1 / numOfAnts * currentTotalDelayRecord;
 
@@ -80,7 +80,7 @@ const antColony = (params) => {
       }
     }
 
-    const newTotalDelay = calculateDelay(newSchedule);
+    const newTotalDelay = calculateScheduleDelay(newSchedule);
     if (newTotalDelay < currentTotalDelayRecord) {
       currentScheduleRecord = newSchedule;
       currentTotalDelayRecord = newTotalDelay;

@@ -11,17 +11,20 @@ const ResultDataTable = ({ schedule, totalDelay }) => (
         <TableCell>ID</TableCell>
         <TableCell>Duration</TableCell>
         <TableCell>Deadline</TableCell>
+        <TableCell>Delay</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {schedule.map(({ id, duration, deadline }) => (
+      {schedule.map(({ id, duration, deadline, delay }) => (
         <TableRow key={id}>
           <TableCell>{id}</TableCell>
           <TableCell>{duration}</TableCell>
           <TableCell>{deadline}</TableCell>
+          <TableCell>{delay}</TableCell>
         </TableRow>
       ))}
       <TableRow>
+        <TableCell />
         <TableCell />
         <TableCell className={styles.totalDelayLabel}>
           Total delay:
@@ -33,8 +36,9 @@ const ResultDataTable = ({ schedule, totalDelay }) => (
 );
 
 const jobPropType = PropTypes.exact({
-  duration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  deadline: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+  duration: PropTypes.number.isRequired,
+  deadline: PropTypes.number.isRequired,
+  delay: PropTypes.number.isRequired
 });
 
 ResultDataTable.propTypes = {
