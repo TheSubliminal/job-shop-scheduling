@@ -36,8 +36,10 @@ const ResultDataTable = ({ schedule, totalDelay }) => (
 );
 
 const jobPropType = PropTypes.exact({
+  id: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
   deadline: PropTypes.number.isRequired,
+  endTime: PropTypes.number.isRequired,
   delay: PropTypes.number.isRequired
 });
 

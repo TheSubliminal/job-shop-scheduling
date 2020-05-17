@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DataForm from '../DataForm';
 import AlgorithmChoice from '../AlgorithmChoice';
 import ACOAdditionalData from '../ACOAdditionalData';
+import ResultIntervalPlot from '../ResultIntervalPlot';
 import ResultDataTable from '../ResultDataTable';
 import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
@@ -157,7 +158,13 @@ class AlgorithmDashboard extends React.Component {
             </Formik>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        {schedule && <ResultDataTable schedule={schedule} totalDelay={totalDelay} />}
+
+        {schedule && (
+          <>
+            <ResultIntervalPlot schedule={schedule} />
+            <ResultDataTable schedule={schedule} totalDelay={totalDelay} />
+          </>
+        )}
       </>
     );
   }
