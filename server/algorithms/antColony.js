@@ -30,7 +30,7 @@ const antColony = (params) => {
     }
   }
 
-  for (let k = 0; k < numOfAnts; k++) {
+  for (let k = 0; k < numOfAnts && currentTotalDelayRecord > 0; k++) {
     const notVisitedJobs = [...currentScheduleRecord];
     const newSchedule = new Array(currentScheduleRecord.length);
 
