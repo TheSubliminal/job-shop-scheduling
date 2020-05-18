@@ -2,7 +2,11 @@ const { greedy } = require('../../algorithms/greedy');
 const schildFredman = require('../../algorithms/schildFredman');
 const { antColony } = require('../../algorithms/antColony');
 
-const { calculateDelay } = require('../../helpers/delayCalculator.helper');
+const {
+  calculateScheduleDelay,
+  calculateJobEndTimes,
+  calculateIndividualDelays
+} = require('../../helpers/delayCalculator.helper');
 const { generateRandomJobs } = require('../../helpers/jobFactory.helper');
 
 const algorithms = require('../../config/algorithms.json');
@@ -31,10 +35,21 @@ const getResult = ({ algorithm, numOfRandomJobs, ...params }) => {
   }
 
   const schedule = algorithmFunc(params);
-  const totalDelay = calculateDelay(schedule);
+
+  const endTimes = calculateJobEndTimes(schedule);
+  const delays = calculateIndividualDelays(schedule);
+  const totalDelay = calculateScheduleDelay(schedule);
+
+  const scheduleWithEndTimesAndDelays = schedule.map((entry, index) => {
+    return {
+      ...entry,
+      endTime: endTimes[index],
+      delay: delays[index]
+    };
+  });
 
   return {
-    schedule,
+    schedule: scheduleWithEndTimesAndDelays,
     totalDelay
   };
 };

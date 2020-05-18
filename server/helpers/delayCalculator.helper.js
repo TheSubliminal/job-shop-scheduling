@@ -12,7 +12,7 @@ const calculateJobEndTimes = (jobs) => {
   return endTimes;
 };
 
-const calculateDelay = (jobs) => {
+const calculateIndividualDelays = (jobs) => {
   const endTimes = calculateJobEndTimes(jobs);
 
   const delays = jobs.map((job, index) => {
@@ -22,6 +22,12 @@ const calculateDelay = (jobs) => {
     return delay;
   });
 
+  return delays;
+};
+
+const calculateScheduleDelay = (jobs) => {
+  const delays = calculateIndividualDelays(jobs);
+
   const totalDelay = delays.reduce((sum, currentDelay) => sum + currentDelay, 0);
   return totalDelay;
 };
@@ -29,5 +35,6 @@ const calculateDelay = (jobs) => {
 
 module.exports = {
   calculateJobEndTimes,
-  calculateDelay
+  calculateIndividualDelays,
+  calculateScheduleDelay
 };

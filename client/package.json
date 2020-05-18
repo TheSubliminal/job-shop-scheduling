@@ -10,6 +10,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "formik": "^2.1.4",
+    "highcharts": "^8.1.0",
+    "highcharts-react-official": "^3.0.0",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

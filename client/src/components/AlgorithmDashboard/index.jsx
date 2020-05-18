@@ -1,12 +1,22 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Button, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Typography
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import DataForm from '../DataForm';
 import AlgorithmChoice from '../AlgorithmChoice';
 import ACOAdditionalData from '../ACOAdditionalData';
+import ResultIntervalPlot from '../ResultIntervalPlot';
+import ResultDataTable from '../ResultDataTable';
+import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
 import algorithms from '../../config/algorithms.json';
 import { positiveError, requiredError } from '../../config/errorMessages.json';
@@ -45,7 +55,11 @@ class AlgorithmDashboard extends React.Component {
     super(props);
 
     this.state = {
-      isDataExpanded: true
+      isDataExpanded: true,
+      inProgress: false,
+      schedule: null,
+      totalDelay: null,
+      error: null
     };
   }
 
@@ -78,16 +92,29 @@ class AlgorithmDashboard extends React.Component {
       algorithmInfo.pheromoneEvaporationCoef = pheromoneEvaporationCoef;
     }
 
-    // send request to server
+    this.setState({ inProgress: true }, () => {
+      getAlgorithmResult(algorithmInfo)
+        .then(({ schedule, totalDelay }) => this.setState({ schedule, totalDelay }))
+        .catch((error) => this.setState({ error, schedule: null, totalDelay: null }))
+        .finally(() => this.setState({ inProgress: false }));
+    });
   };
 
   render() {
     const {
-      isDataExpanded
+      isDataExpanded,
+      inProgress,
+      schedule,
+      totalDelay
     } = this.state;
 
     return (
       <>
+        {inProgress && (
+          <div className={styles.progressOverlay}>
+            <CircularProgress />
+          </div>
+        )}
         <ExpansionPanel expanded={isDataExpanded} onChange={this.toggleDataExpanded}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Algorithm Data</Typography>
@@ -131,6 +158,13 @@ class AlgorithmDashboard extends React.Component {
             </Formik>
           </ExpansionPanelDetails>
         </ExpansionPanel>
+
+        {schedule && (
+          <>
+            <ResultIntervalPlot schedule={schedule} />
+            <ResultDataTable schedule={schedule} totalDelay={totalDelay} />
+          </>
+        )}
       </>
     );
   }

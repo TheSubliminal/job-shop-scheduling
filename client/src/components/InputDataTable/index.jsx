@@ -15,47 +15,45 @@ const defaultJob = {
 };
 
 const InputDataTable = ({ jobs }) => (
-  <>
-    <Table size='small'>
-      <TableHead>
-        <TableRow>
-          <TableCell>ID</TableCell>
-          <TableCell>Duration</TableCell>
-          <TableCell>Deadline</TableCell>
-          {jobs.length > 1 && <TableCell />}
-        </TableRow>
-      </TableHead>
-      <FieldArray
-        name='jobs'
-        render={(arrayHelpers) => (
-          <>
-            <TableBody>
-              {jobs.map((job, index) => (
-                <InputTableRow
-                  key={index}
-                  index={index}
-                  canDelete={jobs.length > 1}
-                  onRemove={() => arrayHelpers.remove(index)}
-                />
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell className={styles.addButtonCell}>
-                  <IconButton
-                    aria-label='Add job'
-                    onClick={() => arrayHelpers.push(defaultJob)}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </>
-        )}
-      />
-    </Table>
-  </>
+  <Table size='small'>
+    <TableHead>
+      <TableRow>
+        <TableCell>ID</TableCell>
+        <TableCell>Duration</TableCell>
+        <TableCell>Deadline</TableCell>
+        {jobs.length > 1 && <TableCell />}
+      </TableRow>
+    </TableHead>
+    <FieldArray
+      name='jobs'
+      render={(arrayHelpers) => (
+        <>
+          <TableBody>
+            {jobs.map((job, index) => (
+              <InputTableRow
+                key={index}
+                index={index}
+                canDelete={jobs.length > 1}
+                onRemove={() => arrayHelpers.remove(index)}
+              />
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell className={styles.addButtonCell}>
+                <IconButton
+                  aria-label='Add job'
+                  onClick={() => arrayHelpers.push(defaultJob)}
+                >
+                  <AddIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </>
+      )}
+    />
+  </Table>
 );
 
 const jobPropType = PropTypes.exact({
