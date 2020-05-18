@@ -1,0 +1,13 @@
+:local(.navLink) {
+  a {
+    color: white;
+  }
+
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  :local(.active) {
+    text-decoration: none;
+  }
+}

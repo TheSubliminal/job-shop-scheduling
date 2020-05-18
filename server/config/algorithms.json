@@ -1,0 +1,14 @@
+{
+  "greedy": {
+    "key": "greedy",
+    "name": "Greedy"
+  },
+  "schildFredman": {
+    "key": "schildFredman",
+    "name": "Schild-Fredman"
+  },
+  "aco": {
+    "key": "aco",
+    "name": "Ant Colony Optimisation"
+  }
+}
