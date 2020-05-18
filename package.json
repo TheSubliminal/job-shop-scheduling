@@ -1,0 +1,22 @@
+{
+  "name": "job-shop-scheduling",
+  "version": "1.0.0",
+  "description": "Course work on the topic of job-shop scheduling optimization problem",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "start": "cd server && npm start",
+    "heroku-postbuild": "cd server && npm install && cd ../client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheSubliminal/job-shop-scheduling.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheSubliminal/job-shop-scheduling/issues"
+  },
+  "homepage": "https://github.com/TheSubliminal/job-shop-scheduling#readme"
+}

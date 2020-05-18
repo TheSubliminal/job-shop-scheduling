@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "lint": "eslint . --ext .js",
-    "lint:fix": "eslint . --ext .js --fix",
-    "heroku-postbuild": "cd ../client && npm install && npm run build"
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "author": "Michael Fridrikhson, Dmytro Tsyliuryk",
   "license": "ISC",
