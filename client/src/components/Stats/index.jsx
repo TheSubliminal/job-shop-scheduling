@@ -96,7 +96,7 @@ const Stats = () => {
   const comparingEfficiency20Options = getComparingEfficiencyOptions(comparingEfficiency20Series, 20);
 
   const comparingEfficiency40Series = getComparingEfficiencySeries(comparingEfficiency40Jobs);
-  const comparingEfficiency40Options = getComparingEfficiencyOptions(comparingEfficiency40Series, 20);
+  const comparingEfficiency40Options = getComparingEfficiencyOptions(comparingEfficiency40Series, 40);
 
   const timeExecutionSeries = [
     {
