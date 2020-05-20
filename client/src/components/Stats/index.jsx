@@ -5,8 +5,10 @@ import HighchartsReact from 'highcharts-react-official';
 
 import antSearch10Jobs from '../../config/stats/antSearch10Jobs.json';
 import antSearch15Jobs from '../../config/stats/antSearch15Jobs.json';
-import comparingEfficiency20Jobs from '../../config/stats/comparingEfficiency20Jobs.json';
-import comparingEfficiency40Jobs from '../../config/stats/comparingEfficiency40Jobs.json';
+import comparingEfficiency4MaxJobDuration from '../../config/stats/comparingEfficiency4MaxJobDuration.json';
+import comparingEfficiency20MaxJobDuration from '../../config/stats/comparingEfficiency20MaxJobDuration.json';
+import comparingEfficiency200MaxJobDuration from '../../config/stats/comparingEfficiency200MaxJobDuration.json';
+
 import timeExecution from '../../config/stats/timeExecution.json';
 
 const Stats = () => {
@@ -57,7 +59,7 @@ const Stats = () => {
     series
   });
 
-  const getComparingEfficiencyOptions = (series, numberOfJobs) => ({
+  const getComparingEfficiencyOptions = (series, maxTaskDuration) => ({
     plotOptions: {
       line: {
         dataLabels: {
@@ -70,7 +72,7 @@ const Stats = () => {
       }
     },
     title: {
-      text: `Comparing efficiency on ${numberOfJobs} random jobs`
+      text: `Comparing efficiency on 30 random jobs with ${maxTaskDuration} as max task duration`
     },
     xAxis: {
       title: {
@@ -92,11 +94,15 @@ const Stats = () => {
   const antSearch15Series = getAntSearchSeries(antSearch15Jobs);
   const antSearch15Options = getAntSearchOptions(antSearch15Series, 15);
 
-  const comparingEfficiency20Series = getComparingEfficiencySeries(comparingEfficiency20Jobs);
+  const comparingEfficiency4Series = getComparingEfficiencySeries(comparingEfficiency4MaxJobDuration);
+  const comparingEfficiency4Options = getComparingEfficiencyOptions(comparingEfficiency4Series, 4);
+
+  const comparingEfficiency20Series = getComparingEfficiencySeries(comparingEfficiency20MaxJobDuration);
   const comparingEfficiency20Options = getComparingEfficiencyOptions(comparingEfficiency20Series, 20);
 
-  const comparingEfficiency40Series = getComparingEfficiencySeries(comparingEfficiency40Jobs);
-  const comparingEfficiency40Options = getComparingEfficiencyOptions(comparingEfficiency40Series, 40);
+  const comparingEfficiency200Series = getComparingEfficiencySeries(comparingEfficiency200MaxJobDuration);
+  const comparingEfficiency200Options = getComparingEfficiencyOptions(comparingEfficiency200Series, 200);
+
 
   const timeExecutionSeries = [
     {
@@ -153,11 +159,15 @@ const Stats = () => {
         highcharts={highchartsMore(Highcharts)}
       />
       <HighchartsReact
+        options={comparingEfficiency4Options}
+        highcharts={highchartsMore(Highcharts)}
+      />
+      <HighchartsReact
         options={comparingEfficiency20Options}
         highcharts={highchartsMore(Highcharts)}
       />
       <HighchartsReact
-        options={comparingEfficiency40Options}
+        options={comparingEfficiency200Options}
         highcharts={highchartsMore(Highcharts)}
       />
       <HighchartsReact
