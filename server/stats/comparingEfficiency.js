@@ -1,5 +1,5 @@
 const { generateRandomJobs } = require('../helpers/jobFactory.helper');
-const { calculateDelay } = require('../helpers/delayCalculator.helper');
+const { calculateScheduleDelay } = require('../helpers/delayCalculator.helper');
 const { greedy } = require('../algorithms/greedy');
 const { antColony } = require('../algorithms/antColony');
 const schildFredman = require('../algorithms/schildFredman');
@@ -17,9 +17,9 @@ for (let i = 0; i < numberOfRuns; i++) {
 
   result[i] = {
     jobRun: i + 1,
-    greedyResult: calculateDelay(greedyResult),
-    antColonyResult: calculateDelay(antResult) - Math.round(Math.random() * 10),
-    schildFredmanResult: calculateDelay(schildFredmanResult),
+    greedyResult: calculateScheduleDelay(greedyResult),
+    antColonyResult: calculateScheduleDelay(antResult),
+    schildFredmanResult: calculateScheduleDelay(schildFredmanResult),
   };
 }
 
