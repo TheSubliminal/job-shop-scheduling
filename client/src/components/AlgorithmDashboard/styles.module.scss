@@ -1,7 +1,7 @@
 :local(.algorithmData):global(.MuiExpansionPanelDetails-root) {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: 0.5rem;
+  gap: 3rem 0.5rem;
 }
 
 :local(.progressOverlay) {
