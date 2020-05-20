@@ -103,6 +103,7 @@ const Stats = () => {
   const comparingEfficiency200Series = getComparingEfficiencySeries(comparingEfficiency200MaxJobDuration);
   const comparingEfficiency200Options = getComparingEfficiencyOptions(comparingEfficiency200Series, 200);
 
+
   const timeExecutionSeries = [
     {
       name: 'Greedy',
