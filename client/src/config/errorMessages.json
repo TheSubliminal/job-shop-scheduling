@@ -1,4 +1,5 @@
 {
   "positiveError": "Provide a positive number",
-  "requiredError": "Required"
+  "requiredError": "Required",
+  "maxError": "Value should be not more then ${max}"
 }

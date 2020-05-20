@@ -19,15 +19,22 @@ import ResultDataTable from '../ResultDataTable';
 import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
 import algorithms from '../../config/algorithms.json';
-import { positiveError, requiredError } from '../../config/errorMessages.json';
+import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
 
 import styles from './styles.module.scss';
 
 const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
 
 const jobSchema = Yup.object().shape({
-  duration: Yup.number().positive(positiveError).integer().required(requiredError),
-  deadline: Yup.number().positive(positiveError).integer().required(requiredError)
+  duration: Yup.number()
+    .positive(positiveError)
+    .max(defaults.maxDuration, maxError)
+    .integer()
+    .required(requiredError),
+  deadline: Yup.number()
+    .positive(positiveError)
+    .integer()
+    .required(requiredError)
 });
 
 const inputDataSchema = Yup.object().shape({
@@ -38,16 +45,39 @@ const inputDataSchema = Yup.object().shape({
   isRandom: Yup.boolean(),
   numOfRandomJobs: Yup.number().when('isRandom', {
     is: true,
-    then: Yup.number().positive(positiveError).integer().required(requiredError)
+    then: Yup.number()
+      .positive(positiveError)
+      .max(defaults.maxNumOfRandomJobs, maxError)
+      .integer()
+      .required(requiredError)
   }),
   algorithm: Yup.mixed().oneOf(algorithmKeys).required(),
   numOfAnts: Yup.number().when('algorithm', {
     is: algorithms.aco.key,
-    then: Yup.number().positive(positiveError).integer().required(requiredError)
+    then: Yup.number()
+      .positive(positiveError)
+      .max(defaults.maxNumOfAnts, maxError)
+      .integer()
+      .required(requiredError)
   }),
-  pheromoneSignificanceCoef: Yup.number().positive(positiveError),
-  heuristicSignificanceCoef: Yup.number().positive(positiveError),
-  pheromoneEvaporationCoef: Yup.number().positive(positiveError)
+  pheromoneSignificanceCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxPheromoneSignificanceCoef, maxError)
+      .positive(positiveError)
+  }),
+  heuristicSignificanceCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxHeuristicSignificanceCoef, maxError)
+      .positive(positiveError)
+  }),
+  pheromoneEvaporationCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxPheromoneEvaporationCoef, maxError)
+      .positive(positiveError)
+  })
 });
 
 class AlgorithmDashboard extends React.Component {
@@ -136,12 +166,13 @@ class AlgorithmDashboard extends React.Component {
               validateOnBlur
               onSubmit={this.onSubmit}
             >
-              {({ values, errors, handleSubmit }) => (
+              {({ values, errors, handleSubmit, setFieldValue }) => (
                 <>
                   <DataForm
                     jobs={values.jobs}
                     isRandom={values.isRandom}
                     numOfRandomJobs={values.numOfRandomJobs}
+                    setJobs={setFieldValue.bind(null, 'jobs')}
                   />
                   <AlgorithmChoice />
                   {values.algorithm === algorithms.aco.key && <ACOAdditionalData />}
@@ -149,6 +180,8 @@ class AlgorithmDashboard extends React.Component {
                     <Button
                       disabled={!!Object.keys(errors).length}
                       onClick={handleSubmit}
+                      color='primary'
+                      variant='contained'
                     >
                       Submit
                     </Button>
