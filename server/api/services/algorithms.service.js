@@ -17,8 +17,8 @@ const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
     params.jobs = generateRandomJobs(numOfRandomJobs);
   }
 
-  const resultSchedules = [];
-  algorithms.forEach(algorithm => {
+
+  const resultSchedules = algorithms.map(algorithm => {
     let algorithmFunc;
     switch (algorithm) {
       case algorithmsDefaults.greedy.key:
@@ -51,10 +51,10 @@ const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
       })
     );
 
-    resultSchedules.push({
+    return  {
       schedule: scheduleWithEndTimesAndDelays,
       totalDelay
-    });
+    };
   });
 
   return resultSchedules;
