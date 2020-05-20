@@ -87,8 +87,7 @@ class AlgorithmDashboard extends React.Component {
     this.state = {
       isDataExpanded: true,
       inProgress: false,
-      schedule: null,
-      totalDelay: null,
+      results: null,
       error: null
     };
   }
@@ -128,8 +127,8 @@ class AlgorithmDashboard extends React.Component {
 
     this.setState({ inProgress: true }, () => {
       getAlgorithmResult(algorithmInfo)
-        .then(({ schedule, totalDelay }) => this.setState({ schedule, totalDelay }))
-        .catch((error) => this.setState({ error, schedule: null, totalDelay: null }))
+        .then((results) => this.setState({ results }))
+        .catch((error) => this.setState({ error, results: null }))
         .finally(() => this.setState({ inProgress: false }));
     });
   };
@@ -138,8 +137,7 @@ class AlgorithmDashboard extends React.Component {
     const {
       isDataExpanded,
       inProgress,
-      schedule,
-      totalDelay
+      results
     } = this.state;
 
     return (
@@ -169,7 +167,7 @@ class AlgorithmDashboard extends React.Component {
                 pheromoneEvaporationCoef: defaults.pheromoneEvaporationCoef
               }}
               validationSchema={inputDataSchema}
-              validateOnBlur
+              validateOnChange
               onSubmit={this.onSubmit}
             >
               {({ values, errors, handleSubmit, setFieldValue }) => {
@@ -203,12 +201,17 @@ class AlgorithmDashboard extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        {schedule && (
-          <>
-            <ResultIntervalPlot schedule={schedule} />
-            <ResultDataTable schedule={schedule} totalDelay={totalDelay} />
-          </>
-        )}
+        {results && results.map(({ algorithm, schedule, totalDelay }, index) => {
+          const algorithmData = algorithms[algorithm];
+          const algorithmName = algorithmData && algorithmData.name;
+
+          return (
+            <React.Fragment key={index}>
+              <ResultIntervalPlot schedule={schedule} algorithm={algorithmName} />
+              <ResultDataTable schedule={schedule} totalDelay={totalDelay} algorithm={algorithmName} />
+            </React.Fragment>
+          );
+        })}
       </>
     );
   }
