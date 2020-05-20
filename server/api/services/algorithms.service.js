@@ -9,49 +9,55 @@ const {
 } = require('../../helpers/delayCalculator.helper');
 const { generateRandomJobs } = require('../../helpers/jobFactory.helper');
 
-const algorithms = require('../../config/algorithms.json');
+const algorithmsDefaults = require('../../config/algorithms.json');
 
-const getResult = ({ algorithm, numOfRandomJobs, ...params }) => {
-  let algorithmFunc;
-  switch (algorithm) {
-    case algorithms.greedy.key:
-      algorithmFunc = greedy;
-      break;
-    case algorithms.schildFredman.key:
-      algorithmFunc = schildFredman;
-      break;
-    case algorithms.aco.key:
-      algorithmFunc = antColony;
-      break;
-    default:
-      algorithmFunc = null;
-  }
-  if (!algorithmFunc) {
-    throw new Error('Algorithm was not selected!');
-  }
+const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
 
   if (numOfRandomJobs) {
     params.jobs = generateRandomJobs(numOfRandomJobs);
   }
 
-  const schedule = algorithmFunc(params);
+  const resultSchedules = [];
+  algorithms.forEach(algorithm => {
+    let algorithmFunc;
+    switch (algorithm) {
+      case algorithmsDefaults.greedy.key:
+        algorithmFunc = greedy;
+        break;
+      case algorithmsDefaults.schildFredman.key:
+        algorithmFunc = schildFredman;
+        break;
+      case algorithmsDefaults.aco.key:
+        algorithmFunc = antColony;
+        break;
+      default:
+        algorithmFunc = null;
+    }
+    if (!algorithmFunc) {
+      throw new Error('Algorithm was not selected!');
+    }
 
-  const endTimes = calculateJobEndTimes(schedule);
-  const delays = calculateIndividualDelays(schedule);
-  const totalDelay = calculateScheduleDelay(schedule);
+    const schedule = algorithmFunc(params);
 
-  const scheduleWithEndTimesAndDelays = schedule.map((entry, index) => {
-    return {
-      ...entry,
-      endTime: endTimes[index],
-      delay: delays[index]
-    };
+    const endTimes = calculateJobEndTimes(schedule);
+    const delays = calculateIndividualDelays(schedule);
+    const totalDelay = calculateScheduleDelay(schedule);
+
+    const scheduleWithEndTimesAndDelays = schedule.map((entry, index) => (
+      {
+        ...entry,
+        endTime: endTimes[index],
+        delay: delays[index]
+      })
+    );
+
+    resultSchedules.push({
+      schedule: scheduleWithEndTimesAndDelays,
+      totalDelay
+    });
   });
 
-  return {
-    schedule: scheduleWithEndTimesAndDelays,
-    totalDelay
-  };
+  return resultSchedules;
 };
 
 module.exports = {
