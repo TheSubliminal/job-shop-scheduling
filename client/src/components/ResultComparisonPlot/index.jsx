@@ -79,11 +79,11 @@ const ResultComparisonPlot = ({ schedules }) => {
   return (
     <>
       <HighchartsReact
-        options={jobDelayOptions}
+        options={totalDelayOptions}
         highcharts={Highcharts}
       />
       <HighchartsReact
-        options={totalDelayOptions}
+        options={jobDelayOptions}
         highcharts={Highcharts}
       />
     </>
@@ -95,8 +95,7 @@ const jobPropType = PropTypes.exact({
   duration: PropTypes.number.isRequired,
   deadline: PropTypes.number.isRequired,
   endTime: PropTypes.number.isRequired,
-  delay: PropTypes.number.isRequired,
-  algorithm: PropTypes.oneOf(algorithmKeys).isRequired
+  delay: PropTypes.number.isRequired
 });
 
 const schedulePropType = PropTypes.exact({
