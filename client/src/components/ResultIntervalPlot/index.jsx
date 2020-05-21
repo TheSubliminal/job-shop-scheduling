@@ -4,7 +4,11 @@ import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 
-const ResultIntervalPlot = ({ schedule }) => {
+import algorithms from '../../config/algorithms.json';
+
+const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
+
+const ResultIntervalPlot = ({ schedule, algorithm }) => {
   const jobIDs = schedule.map(job => job.id);
 
   const series = [
@@ -20,7 +24,7 @@ const ResultIntervalPlot = ({ schedule }) => {
       inverted: true
     },
     title: {
-      text: 'Schedule'
+      text: `Schedule for ${algorithm}`
     },
     plotOptions: {
       series: {
@@ -56,7 +60,8 @@ const jobPropType = PropTypes.shape({
 });
 
 ResultIntervalPlot.propTypes = {
-  schedule: PropTypes.arrayOf(jobPropType).isRequired
+  schedule: PropTypes.arrayOf(jobPropType).isRequired,
+  algorithm: PropTypes.oneOf(algorithmKeys).isRequired
 };
 
 export default ResultIntervalPlot;

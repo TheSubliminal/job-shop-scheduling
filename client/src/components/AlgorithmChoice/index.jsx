@@ -1,29 +1,24 @@
 import React from 'react';
 import { Field } from 'formik';
-import { FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
+import { FormControlLabel, Checkbox, FormGroup, Typography } from '@material-ui/core';
 
 import algorithmsConfig from '../../config/algorithms.json';
 
 const AlgorithmChoice = () => (
   <>
     <Typography>Choose algorithm</Typography>
-    <Field name='algorithm'>
-      {({ field }) => (
-        <RadioGroup
-          aria-label='Algorithms'
-          {...field}
-        >
-          {Object.values(algorithmsConfig).map(({ key, name }) => (
+    <FormGroup>
+      {Object.values(algorithmsConfig).map(({ key, name }) => (
+        <Field key={key} name={key}>
+          {({ field }) =>  (
             <FormControlLabel
-              key={key}
-              value={key}
-              control={<Radio />}
+              control={<Checkbox checked={field.value} {...field} />}
               label={name}
             />
-          ))}
-        </RadioGroup>
-      )}
-    </Field>
+          )}
+        </Field>
+      ))}
+    </FormGroup>
   </>
 );
 

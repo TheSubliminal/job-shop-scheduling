@@ -53,7 +53,8 @@ const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
 
     return  {
       schedule: scheduleWithEndTimesAndDelays,
-      totalDelay
+      totalDelay,
+      algorithm
     };
   });
 
