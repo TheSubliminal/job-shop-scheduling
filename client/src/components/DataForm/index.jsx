@@ -15,6 +15,7 @@ import {
 
 import InputDataTable from '../InputDataTable';
 import NumOfRandomJobsInput from '../NumOfRandomJobsInput';
+import problem5jobs from '../../config/problems/problem5jobs.json';
 import problem10jobs from '../../config/problems/problem10jobs.json';
 import problem20jobs from '../../config/problems/problem20jobs.json';
 import problem35jobs from '../../config/problems/problem35jobs.json';
@@ -22,6 +23,10 @@ import problem35jobs from '../../config/problems/problem35jobs.json';
 import styles from './styles.module.scss';
 
 const predefinedProblems = [
+  {
+    jobs: problem5jobs,
+    name: 'problem5jobs.json'
+  },
   {
     jobs: problem10jobs,
     name: 'problem10jobs.json'
