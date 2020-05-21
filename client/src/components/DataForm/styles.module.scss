@@ -1,0 +1,9 @@
+:local(.fileUpload) {
+  display: none;
+}
+
+:local(.predefinedProblemSelect):global(.MuiFormControl-root) {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 13rem;
+}

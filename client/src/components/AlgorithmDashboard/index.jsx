@@ -16,18 +16,24 @@ import AlgorithmChoice from '../AlgorithmChoice';
 import ACOAdditionalData from '../ACOAdditionalData';
 import ResultIntervalPlot from '../ResultIntervalPlot';
 import ResultDataTable from '../ResultDataTable';
+import ResultComparisonPlot from '../ResultComparisonPlot';
 import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
 import algorithms from '../../config/algorithms.json';
-import { positiveError, requiredError } from '../../config/errorMessages.json';
+import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
 
 import styles from './styles.module.scss';
 
-const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
-
 const jobSchema = Yup.object().shape({
-  duration: Yup.number().positive(positiveError).integer().required(requiredError),
-  deadline: Yup.number().positive(positiveError).integer().required(requiredError)
+  duration: Yup.number()
+    .positive(positiveError)
+    .max(defaults.maxDuration, maxError)
+    .integer()
+    .required(requiredError),
+  deadline: Yup.number()
+    .positive(positiveError)
+    .integer()
+    .required(requiredError)
 });
 
 const inputDataSchema = Yup.object().shape({
@@ -36,18 +42,43 @@ const inputDataSchema = Yup.object().shape({
     then: Yup.array().of(jobSchema).min(1).required(requiredError)
   }),
   isRandom: Yup.boolean(),
+  greedy: Yup.boolean(),
+  schildFredman: Yup.boolean(),
+  aco: Yup.boolean(),
   numOfRandomJobs: Yup.number().when('isRandom', {
     is: true,
-    then: Yup.number().positive(positiveError).integer().required(requiredError)
+    then: Yup.number()
+      .positive(positiveError)
+      .max(defaults.maxNumOfRandomJobs, maxError)
+      .integer()
+      .required(requiredError)
   }),
-  algorithm: Yup.mixed().oneOf(algorithmKeys).required(),
   numOfAnts: Yup.number().when('algorithm', {
     is: algorithms.aco.key,
-    then: Yup.number().positive(positiveError).integer().required(requiredError)
+    then: Yup.number()
+      .positive(positiveError)
+      .max(defaults.maxNumOfAnts, maxError)
+      .integer()
+      .required(requiredError)
   }),
-  pheromoneSignificanceCoef: Yup.number().positive(positiveError),
-  heuristicSignificanceCoef: Yup.number().positive(positiveError),
-  pheromoneEvaporationCoef: Yup.number().positive(positiveError)
+  pheromoneSignificanceCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxPheromoneSignificanceCoef, maxError)
+      .positive(positiveError)
+  }),
+  heuristicSignificanceCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxHeuristicSignificanceCoef, maxError)
+      .positive(positiveError)
+  }),
+  pheromoneEvaporationCoef: Yup.number().when('algorithm', {
+    is: algorithms.aco.key,
+    then: Yup.number()
+      .max(defaults.maxPheromoneEvaporationCoef, maxError)
+      .positive(positiveError)
+  })
 });
 
 class AlgorithmDashboard extends React.Component {
@@ -57,8 +88,7 @@ class AlgorithmDashboard extends React.Component {
     this.state = {
       isDataExpanded: true,
       inProgress: false,
-      schedule: null,
-      totalDelay: null,
+      results: null,
       error: null
     };
   }
@@ -67,7 +97,7 @@ class AlgorithmDashboard extends React.Component {
 
   onSubmit = (values) => {
     const {
-      algorithm,
+      aco,
       jobs,
       isRandom,
       numOfRandomJobs,
@@ -77,7 +107,11 @@ class AlgorithmDashboard extends React.Component {
       pheromoneEvaporationCoef
     } = values;
 
-    const algorithmInfo = { algorithm };
+    const selectedAlgorithms = Object.values(algorithms)
+      .filter(({ key }) => values[key])
+      .map(({ key }) => key);
+
+    const algorithmInfo = { algorithms: selectedAlgorithms };
 
     if (isRandom) {
       algorithmInfo.numOfRandomJobs = numOfRandomJobs;
@@ -85,7 +119,7 @@ class AlgorithmDashboard extends React.Component {
       algorithmInfo.jobs = jobs.map((job, index) => ({ ...job, id: index + 1 }));
     }
 
-    if (algorithm === algorithms.aco.key) {
+    if (aco) {
       algorithmInfo.numOfAnts = numOfAnts;
       algorithmInfo.pheromoneSignificanceCoef = pheromoneSignificanceCoef;
       algorithmInfo.heuristicSignificanceCoef = heuristicSignificanceCoef;
@@ -94,8 +128,8 @@ class AlgorithmDashboard extends React.Component {
 
     this.setState({ inProgress: true }, () => {
       getAlgorithmResult(algorithmInfo)
-        .then(({ schedule, totalDelay }) => this.setState({ schedule, totalDelay }))
-        .catch((error) => this.setState({ error, schedule: null, totalDelay: null }))
+        .then((results) => this.setState({ results }))
+        .catch((error) => this.setState({ error, results: null }))
         .finally(() => this.setState({ inProgress: false }));
     });
   };
@@ -104,8 +138,7 @@ class AlgorithmDashboard extends React.Component {
     const {
       isDataExpanded,
       inProgress,
-      schedule,
-      totalDelay
+      results
     } = this.state;
 
     return (
@@ -124,45 +157,65 @@ class AlgorithmDashboard extends React.Component {
             <Formik
               initialValues={{
                 jobs: [{ duration: defaults.duration, deadline: defaults.deadline }],
+                [algorithms.greedy.key]: true,
+                [algorithms.schildFredman.key]: false,
+                [algorithms.aco.key]: false,
                 isRandom: false,
                 numOfRandomJobs: defaults.numOfRandomJobs,
-                algorithm: defaults.algorithm,
                 numOfAnts: defaults.numOfAnts,
                 pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
                 heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
                 pheromoneEvaporationCoef: defaults.pheromoneEvaporationCoef
               }}
               validationSchema={inputDataSchema}
-              validateOnBlur
+              validateOnChange
               onSubmit={this.onSubmit}
             >
-              {({ values, errors, handleSubmit }) => (
-                <>
-                  <DataForm
-                    jobs={values.jobs}
-                    isRandom={values.isRandom}
-                    numOfRandomJobs={values.numOfRandomJobs}
-                  />
-                  <AlgorithmChoice />
-                  {values.algorithm === algorithms.aco.key && <ACOAdditionalData />}
-                  <div>
-                    <Button
-                      disabled={!!Object.keys(errors).length}
-                      onClick={handleSubmit}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </>
-              )}
+              {({ values, errors, handleSubmit, setFieldValue }) => {
+                const errorsExist = !!Object.keys(errors).length;
+                const areAlgorithmsSelected = values.greedy || values.schildFredman || values.aco;
+
+                return (
+                  <>
+                    <DataForm
+                      jobs={values.jobs}
+                      isRandom={values.isRandom}
+                      numOfRandomJobs={values.numOfRandomJobs}
+                      setJobs={setFieldValue.bind(null, 'jobs')}
+                    />
+                    <AlgorithmChoice />
+                    {values.aco && <ACOAdditionalData />}
+                    <div>
+                      <Button
+                        disabled={errorsExist || !areAlgorithmsSelected}
+                        onClick={handleSubmit}
+                        color='primary'
+                        variant='contained'
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </>
+                );
+              }}
             </Formik>
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        {schedule && (
+        {results && (
           <>
-            <ResultIntervalPlot schedule={schedule} />
-            <ResultDataTable schedule={schedule} totalDelay={totalDelay} />
+            <ResultComparisonPlot schedules={results} />
+            {results.map(({ algorithm, schedule, totalDelay }) => {
+              const algorithmData = algorithms[algorithm];
+              const algorithmName = algorithmData && algorithmData.name;
+
+              return (
+                <React.Fragment key={algorithm}>
+                  <ResultIntervalPlot schedule={schedule} algorithm={algorithmName} />
+                  <ResultDataTable schedule={schedule} totalDelay={totalDelay} algorithm={algorithmName} />
+                </React.Fragment>
+              );
+            })}
           </>
         )}
       </>
