@@ -22,6 +22,7 @@ import algorithms from '../../config/algorithms.json';
 import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
 
 import styles from './styles.module.scss';
+import ResultComparisonPlot from '../ResultComparisonPlot';
 
 const jobSchema = Yup.object().shape({
   duration: Yup.number()
@@ -201,17 +202,22 @@ class AlgorithmDashboard extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        {results && results.map(({ algorithm, schedule, totalDelay }, index) => {
-          const algorithmData = algorithms[algorithm];
-          const algorithmName = algorithmData && algorithmData.name;
+        {results && (
+          <>
+            <ResultComparisonPlot schedules={results} />
+            {results.map(({ algorithm, schedule, totalDelay }, index) => {
+              const algorithmData = algorithms[algorithm];
+              const algorithmName = algorithmData && algorithmData.name;
 
-          return (
-            <React.Fragment key={index}>
-              <ResultIntervalPlot schedule={schedule} algorithm={algorithmName} />
-              <ResultDataTable schedule={schedule} totalDelay={totalDelay} algorithm={algorithmName} />
-            </React.Fragment>
-          );
-        })}
+              return (
+                <React.Fragment key={index}>
+                  <ResultIntervalPlot schedule={schedule} algorithm={algorithmName} />
+                  <ResultDataTable schedule={schedule} totalDelay={totalDelay} algorithm={algorithmName} />
+                </React.Fragment>
+              );
+            })}
+          </>
+        )}
       </>
     );
   }
