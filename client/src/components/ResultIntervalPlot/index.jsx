@@ -6,7 +6,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 import algorithms from '../../config/algorithms.json';
 
-const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
+const algorithmNames = Object.values(algorithms).map(({ name }) => name);
 
 const ResultIntervalPlot = ({ schedule, algorithm }) => {
   const jobIDs = schedule.map(job => job.id);
@@ -61,7 +61,7 @@ const jobPropType = PropTypes.shape({
 
 ResultIntervalPlot.propTypes = {
   schedule: PropTypes.arrayOf(jobPropType).isRequired,
-  algorithm: PropTypes.oneOf(algorithmKeys).isRequired
+  algorithm: PropTypes.oneOf(algorithmNames).isRequired
 };
 
 export default ResultIntervalPlot;

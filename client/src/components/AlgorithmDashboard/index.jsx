@@ -16,13 +16,13 @@ import AlgorithmChoice from '../AlgorithmChoice';
 import ACOAdditionalData from '../ACOAdditionalData';
 import ResultIntervalPlot from '../ResultIntervalPlot';
 import ResultDataTable from '../ResultDataTable';
+import ResultComparisonPlot from '../ResultComparisonPlot';
 import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
 import algorithms from '../../config/algorithms.json';
 import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
 
 import styles from './styles.module.scss';
-import ResultComparisonPlot from '../ResultComparisonPlot';
 
 const jobSchema = Yup.object().shape({
   duration: Yup.number()
@@ -205,12 +205,12 @@ class AlgorithmDashboard extends React.Component {
         {results && (
           <>
             <ResultComparisonPlot schedules={results} />
-            {results.map(({ algorithm, schedule, totalDelay }, index) => {
+            {results.map(({ algorithm, schedule, totalDelay }) => {
               const algorithmData = algorithms[algorithm];
               const algorithmName = algorithmData && algorithmData.name;
 
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={algorithm}>
                   <ResultIntervalPlot schedule={schedule} algorithm={algorithmName} />
                   <ResultDataTable schedule={schedule} totalDelay={totalDelay} algorithm={algorithmName} />
                 </React.Fragment>
