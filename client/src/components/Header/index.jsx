@@ -15,7 +15,7 @@ const Header = () => (
         </Typography>
         <Typography className={styles.navLink}>
           <NavLink to='/stats' activeClassName={styles.active}>
-            Algorithm test results
+            Experiments
           </NavLink>
         </Typography>
       </Toolbar>

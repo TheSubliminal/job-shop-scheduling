@@ -1,28 +1,19 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {
-  Button,
-  CircularProgress,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  Typography
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/Button';
 
-import DataForm from '../DataForm';
+import DataForm from './DataForm';
 import AlgorithmChoice from '../AlgorithmChoice';
-import ACOAdditionalData from '../ACOAdditionalData';
-import ResultIntervalPlot from '../ResultIntervalPlot';
-import ResultDataTable from '../ResultDataTable';
-import ResultComparisonPlot from '../ResultComparisonPlot';
+import ResultIntervalPlot from './ResultIntervalPlot';
+import ResultDataTable from './ResultDataTable';
+import ResultComparisonPlot from './ResultComparisonPlot';
+import DataFormExpansionPanel from '../DataFormExpansionPanel';
+import algorithms from '../../config/algorithms.json';
 import { getAlgorithmResult } from '../../services/algorithmService';
 import defaults from '../../config/default.json';
-import algorithms from '../../config/algorithms.json';
 import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
-
-import styles from './styles.module.scss';
+import { algorithmChoiceValidationSchema } from '../../config/validation';
 
 const jobSchema = Yup.object().shape({
   duration: Yup.number()
@@ -42,9 +33,6 @@ const inputDataSchema = Yup.object().shape({
     then: Yup.array().of(jobSchema).min(1).required(requiredError)
   }),
   isRandom: Yup.boolean(),
-  greedy: Yup.boolean(),
-  schildFredman: Yup.boolean(),
-  aco: Yup.boolean(),
   numOfRandomJobs: Yup.number().when('isRandom', {
     is: true,
     then: Yup.number()
@@ -53,32 +41,7 @@ const inputDataSchema = Yup.object().shape({
       .integer()
       .required(requiredError)
   }),
-  numOfAnts: Yup.number().when('algorithm', {
-    is: algorithms.aco.key,
-    then: Yup.number()
-      .positive(positiveError)
-      .max(defaults.maxNumOfAnts, maxError)
-      .integer()
-      .required(requiredError)
-  }),
-  pheromoneSignificanceCoef: Yup.number().when('algorithm', {
-    is: algorithms.aco.key,
-    then: Yup.number()
-      .max(defaults.maxPheromoneSignificanceCoef, maxError)
-      .positive(positiveError)
-  }),
-  heuristicSignificanceCoef: Yup.number().when('algorithm', {
-    is: algorithms.aco.key,
-    then: Yup.number()
-      .max(defaults.maxHeuristicSignificanceCoef, maxError)
-      .positive(positiveError)
-  }),
-  pheromoneEvaporationCoef: Yup.number().when('algorithm', {
-    is: algorithms.aco.key,
-    then: Yup.number()
-      .max(defaults.maxPheromoneEvaporationCoef, maxError)
-      .positive(positiveError)
-  })
+  ...algorithmChoiceValidationSchema
 });
 
 class AlgorithmDashboard extends React.Component {
@@ -86,14 +49,11 @@ class AlgorithmDashboard extends React.Component {
     super(props);
 
     this.state = {
-      isDataExpanded: true,
       inProgress: false,
       results: null,
       error: null
     };
   }
-
-  toggleDataExpanded = () => this.setState(prevState => ({ isDataExpanded: !prevState.isDataExpanded }));
 
   onSubmit = (values) => {
     const {
@@ -135,72 +95,59 @@ class AlgorithmDashboard extends React.Component {
   };
 
   render() {
-    const {
-      isDataExpanded,
-      inProgress,
-      results
-    } = this.state;
+    const { inProgress, results } = this.state;
 
     return (
       <>
-        {inProgress && (
-          <div className={styles.progressOverlay}>
-            <CircularProgress />
-          </div>
-        )}
-        <ExpansionPanel expanded={isDataExpanded} onChange={this.toggleDataExpanded}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Algorithm Data</Typography>
-          </ExpansionPanelSummary>
+        <DataFormExpansionPanel
+          title='Algorithm Data'
+          isLoading={inProgress}
+        >
+          <Formik
+            initialValues={{
+              jobs: [{ duration: defaults.duration, deadline: defaults.deadline }],
+              [algorithms.greedy.key]: true,
+              [algorithms.schildFredman.key]: false,
+              [algorithms.aco.key]: false,
+              isRandom: false,
+              numOfRandomJobs: defaults.numOfRandomJobs,
+              numOfAnts: defaults.numOfAnts,
+              pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
+              heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
+              pheromoneEvaporationCoef: defaults.pheromoneEvaporationCoef
+            }}
+            validationSchema={inputDataSchema}
+            validateOnChange
+            onSubmit={this.onSubmit}
+          >
+            {({ values, errors, handleSubmit, setFieldValue }) => {
+              const errorsExist = !!Object.keys(errors).length;
+              const areAlgorithmsSelected = values.greedy || values.schildFredman || values.aco;
 
-          <ExpansionPanelDetails className={styles.algorithmData}>
-            <Formik
-              initialValues={{
-                jobs: [{ duration: defaults.duration, deadline: defaults.deadline }],
-                [algorithms.greedy.key]: true,
-                [algorithms.schildFredman.key]: false,
-                [algorithms.aco.key]: false,
-                isRandom: false,
-                numOfRandomJobs: defaults.numOfRandomJobs,
-                numOfAnts: defaults.numOfAnts,
-                pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
-                heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
-                pheromoneEvaporationCoef: defaults.pheromoneEvaporationCoef
-              }}
-              validationSchema={inputDataSchema}
-              validateOnChange
-              onSubmit={this.onSubmit}
-            >
-              {({ values, errors, handleSubmit, setFieldValue }) => {
-                const errorsExist = !!Object.keys(errors).length;
-                const areAlgorithmsSelected = values.greedy || values.schildFredman || values.aco;
-
-                return (
-                  <>
-                    <DataForm
-                      jobs={values.jobs}
-                      isRandom={values.isRandom}
-                      numOfRandomJobs={values.numOfRandomJobs}
-                      setJobs={setFieldValue.bind(null, 'jobs')}
-                    />
-                    <AlgorithmChoice />
-                    {values.aco && <ACOAdditionalData />}
-                    <div>
-                      <Button
-                        disabled={errorsExist || !areAlgorithmsSelected}
-                        onClick={handleSubmit}
-                        color='primary'
-                        variant='contained'
-                      >
-                        Submit
-                      </Button>
-                    </div>
-                  </>
-                );
-              }}
-            </Formik>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+              return (
+                <>
+                  <DataForm
+                    jobs={values.jobs}
+                    isRandom={values.isRandom}
+                    numOfRandomJobs={values.numOfRandomJobs}
+                    setJobs={setFieldValue.bind(null, 'jobs')}
+                  />
+                  <AlgorithmChoice isACO={values.aco} />
+                  <div>
+                    <Button
+                      disabled={errorsExist || !areAlgorithmsSelected}
+                      onClick={handleSubmit}
+                      color='primary'
+                      variant='contained'
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </>
+              );
+            }}
+          </Formik>
+        </DataFormExpansionPanel>
 
         {results && (
           <>

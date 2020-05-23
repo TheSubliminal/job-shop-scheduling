@@ -3,6 +3,7 @@ import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 
+import ExecutionTimeDashboard from '../ExecutionTimeDashboard';
 import antSearch10Jobs from '../../config/stats/antSearch10Jobs.json';
 import antSearch15Jobs from '../../config/stats/antSearch15Jobs.json';
 import comparingEfficiency4MaxJobDuration from '../../config/stats/comparingEfficiency4MaxJobDuration.json';
@@ -150,6 +151,7 @@ const Stats = () => {
 
   return (
     <>
+      <ExecutionTimeDashboard />
       <HighchartsReact
         options={antSearch10Options}
         highcharts={highchartsMore(Highcharts)}

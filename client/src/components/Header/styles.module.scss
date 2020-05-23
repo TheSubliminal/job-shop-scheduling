@@ -1,13 +1,18 @@
 :local(.navLink) {
   a {
     color: white;
+    text-decoration: none;
+    opacity: 0.5;
+
+    transition: opacity 0.15s;
   }
 
   &:not(:last-child) {
-    margin-right: 0.5rem;
+    margin-right: 1.25rem;
   }
 
+  a:hover,
   :local(.active) {
-    text-decoration: none;
+    opacity: 1;
   }
 }

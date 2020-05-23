@@ -4,7 +4,7 @@ import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 
-import algorithms from '../../config/algorithms.json';
+import algorithms from '../../../config/algorithms.json';
 
 const algorithmNames = Object.values(algorithms).map(({ name }) => name);
 

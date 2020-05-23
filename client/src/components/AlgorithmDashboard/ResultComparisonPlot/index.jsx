@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import algorithms from '../../config/algorithms.json';
+import algorithms from '../../../config/algorithms.json';
 
 const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
 

@@ -5,7 +5,7 @@ import { IconButton, Table, TableHead, TableBody, TableRow, TableCell, TableFoot
 import AddIcon from '@material-ui/icons/Add';
 
 import InputTableRow from './InputTableRow';
-import defaults from '../../config/default.json';
+import defaults from '../../../config/default.json';
 
 import styles from './styles.module.scss';
 
