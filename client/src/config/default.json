@@ -13,6 +13,11 @@
   "numOfJobsTo": 100,
   "numOfJobsStep": 10,
 
+  "jobDurationFrom": 1,
+  "jobDurationTo": 20,
+  "jobDurationStep": 5,
+  "numOfJobsInExperiment": 20,
+
   "maxNumOfRandomJobs": 500,
   "maxDuration": 20,
   "maxNumOfAnts": 40,
@@ -22,5 +27,10 @@
 
   "maxNumOfJobsFrom": 100,
   "maxNumOfJobsTo": 1000,
-  "maxNumOfJobsStep": 100
+  "maxNumOfJobsStep": 100,
+
+  "maxJobDurationFrom": 10,
+  "maxJobDurationTo": 50,
+  "maxJobDurationStep": 10,
+  "maxNumOfJobsInExperiment": 200
 }

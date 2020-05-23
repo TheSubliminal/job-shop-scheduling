@@ -11,6 +11,8 @@ import comparingEfficiency20MaxJobDuration from '../../config/stats/comparingEff
 import comparingEfficiency200MaxJobDuration from '../../config/stats/comparingEfficiency200MaxJobDuration.json';
 
 import timeExecution from '../../config/stats/timeExecution.json';
+import JobDurationDashboard from '../JobDurationDashboard';
+import NumOfJobsDashboard from '../NumOfJobsDashboard';
 
 const Stats = () => {
   const getAntSearchSeries = (data) => [{
@@ -152,6 +154,8 @@ const Stats = () => {
   return (
     <>
       <ExecutionTimeDashboard />
+      <JobDurationDashboard />
+      <NumOfJobsDashboard />
       <HighchartsReact
         options={antSearch10Options}
         highcharts={highchartsMore(Highcharts)}

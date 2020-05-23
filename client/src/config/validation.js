@@ -42,3 +42,29 @@ export const algorithmChoiceValidationSchema = {
       .positive(positiveError)
   })
 };
+
+export const getFromToStepValidation = (maxBounds) => {
+  const {
+    maxFrom,
+    maxTo,
+    maxStep
+  } = maxBounds;
+
+  return {
+    from: Yup.number()
+      .positive(positiveError)
+      .max(maxFrom, maxError)
+      .integer()
+      .required(requiredError),
+    to: Yup.number()
+      .positive(positiveError)
+      .max(maxTo, maxError)
+      .integer()
+      .required(requiredError),
+    step: Yup.number()
+      .positive(positiveError)
+      .max(maxStep, maxError)
+      .integer()
+      .required(requiredError)
+  };
+};

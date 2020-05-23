@@ -1,11 +1,11 @@
 import React from 'react';
 
-import ExecutionTimeDataForm from './DataForm';
+import NumOfJobsDataForm from './DataForm';
 import StatsDashboardWrapper from '../StatsDashboardWrapper';
 import defaults from '../../config/default.json';
 import { getFromToStepValidation } from '../../config/validation';
 
-const ExecutionTimeDashboard = () => {
+const NumOfJobsDashboard = () => {
   const initialValues = {
     from: defaults.numOfJobsFrom,
     to: defaults.numOfJobsTo,
@@ -21,8 +21,8 @@ const ExecutionTimeDashboard = () => {
 
   return (
     <StatsDashboardWrapper
-      title='Execution Time'
-      dataForm={<ExecutionTimeDataForm />}
+      title='Number Of Jobs'
+      dataForm={<NumOfJobsDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}
       sendValues={() => {}}
@@ -30,4 +30,4 @@ const ExecutionTimeDashboard = () => {
   );
 };
 
-export default ExecutionTimeDashboard;
+export default NumOfJobsDashboard;
