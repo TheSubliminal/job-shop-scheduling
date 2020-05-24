@@ -2,6 +2,8 @@ import React from 'react';
 
 import TimeComplexityDataForm from './DataForm';
 import StatsDashboardWrapper from '../StatsDashboardWrapper';
+import TimeComplexityPlot from './Plot';
+import { getTimeComplexityStats } from '../../services/statsService';
 import defaults from '../../config/default.json';
 import { getFromToStepValidation } from '../../config/validation';
 
@@ -10,7 +12,6 @@ const TimeComplexityDashboard = () => {
     from: defaults.numOfJobsFrom,
     to: defaults.numOfJobsTo,
     step: defaults.numOfJobsStep,
-    numOfAnts: defaults.numOfAnts,
   };
 
   const validationSchema = getFromToStepValidation({
@@ -26,7 +27,8 @@ const TimeComplexityDashboard = () => {
       dataForm={<TimeComplexityDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}
-      sendValues={() => {}}
+      plot={TimeComplexityPlot}
+      onSubmit={getTimeComplexityStats}
     />
   );
 };

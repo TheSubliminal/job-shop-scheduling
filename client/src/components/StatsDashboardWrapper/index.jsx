@@ -17,7 +17,8 @@ const StatsDashboardWrapper = (props) => {
     dataForm,
     dataFormInitialValues,
     dataFormValidationSchema,
-    sendValues
+    plot: Plot,
+    onSubmit: handleSubmit
   } = props;
 
   const [inProgress, setInProgress] = useState(false);
@@ -46,14 +47,14 @@ const StatsDashboardWrapper = (props) => {
       algorithmInfo.pheromoneEvaporationCoef = pheromoneEvaporationCoef;
     }
 
-    // setInProgress(true);
-    // sendValues(algorithmInfo)
-    //   .then((results) => setResults(results))
-    //   .catch((error) => {
-    //     setError(error);
-    //     setResults(null);
-    //   })
-    //   .finally(() => setInProgress(false));
+    setInProgress(true);
+    handleSubmit(algorithmInfo)
+      .then((results) => setResults({ params: results }))
+      .catch((error) => {
+        setError(error);
+        setResults(null);
+      })
+      .finally(() => setInProgress(false));
   };
 
   return (
@@ -68,6 +69,7 @@ const StatsDashboardWrapper = (props) => {
           [algorithms.greedy.key]: true,
           [algorithms.schildFredman.key]: false,
           [algorithms.aco.key]: false,
+          numOfAnts: defaults.numOfAnts,
           pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
           heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
           pheromoneEvaporationCoef: defaults.pheromoneEvaporationCoef
@@ -101,6 +103,7 @@ const StatsDashboardWrapper = (props) => {
           );
         }}
       </Formik>
+      <Plot {...results} />
     </DataFormExpansionPanel>
   );
 };
@@ -111,7 +114,8 @@ StatsDashboardWrapper.propTypes = {
   dataForm: PropTypes.element.isRequired,
   dataFormInitialValues: PropTypes.object.isRequired,
   dataFormValidationSchema: PropTypes.objectOf(PropTypes.object).isRequired,
-  sendValues: PropTypes.func.isRequired
+  plot: PropTypes.elementType.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default StatsDashboardWrapper;

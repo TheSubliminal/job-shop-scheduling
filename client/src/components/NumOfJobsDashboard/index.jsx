@@ -2,6 +2,8 @@ import React from 'react';
 
 import NumOfJobsDataForm from './DataForm';
 import StatsDashboardWrapper from '../StatsDashboardWrapper';
+import NumOfJobsPlot from './Plot';
+import { getNumOfJobsStats } from '../../services/statsService';
 import defaults from '../../config/default.json';
 import { getFromToStepValidation } from '../../config/validation';
 
@@ -26,7 +28,8 @@ const NumOfJobsDashboard = () => {
       dataForm={<NumOfJobsDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}
-      sendValues={() => {}}
+      plot={NumOfJobsPlot}
+      onSubmit={getNumOfJobsStats}
     />
   );
 };

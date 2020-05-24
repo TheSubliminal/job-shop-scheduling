@@ -7,14 +7,6 @@ export const algorithmChoiceValidationSchema = {
   greedy: Yup.boolean(),
   schildFredman: Yup.boolean(),
   aco: Yup.boolean(),
-  numOfRandomJobs: Yup.number().when('isRandom', {
-    is: true,
-    then: Yup.number()
-      .positive(positiveError)
-      .max(defaults.maxNumOfRandomJobs, maxError)
-      .integer()
-      .required(requiredError)
-  }),
   numOfAnts: Yup.number().when('aco', {
     is: true,
     then: Yup.number()

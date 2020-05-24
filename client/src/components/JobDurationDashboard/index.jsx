@@ -3,7 +3,9 @@ import * as Yup from 'yup';
 
 import JobDurationDataForm from './DataForm';
 import StatsDashboardWrapper from '../StatsDashboardWrapper';
+import JobDurationPlot from './Plot';
 import defaults from '../../config/default.json';
+import { getJobDurationStats } from '../../services/statsService';
 import { maxError, positiveError, requiredError } from '../../config/errorMessages.json';
 import { getFromToStepValidation } from '../../config/validation';
 
@@ -34,7 +36,8 @@ const JobDurationDashboard = () => {
       dataForm={<JobDurationDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}
-      sendValues={() => {}}
+      plot={JobDurationPlot}
+      onSubmit={getJobDurationStats}
     />
   );
 };
