@@ -1,41 +1,19 @@
-const { greedy } = require('../../algorithms/greedy');
-const schildFredman = require('../../algorithms/schildFredman');
-const { antColony } = require('../../algorithms/antColony');
-
 const {
   calculateScheduleDelay,
   calculateJobEndTimes,
   calculateIndividualDelays
 } = require('../../helpers/delayCalculator.helper');
 const { generateRandomJobs } = require('../../helpers/jobFactory.helper');
+const { getAlgorithm } = require('../../helpers/getAlgorithm.helper');
 
-const algorithmsDefaults = require('../../config/algorithms.json');
-
-const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
+const getResults = ({ algorithms, numOfRandomJobs, ...params }) => {
 
   if (numOfRandomJobs) {
     params.jobs = generateRandomJobs(numOfRandomJobs);
   }
 
-
   const resultSchedules = algorithms.map(algorithm => {
-    let algorithmFunc;
-    switch (algorithm) {
-      case algorithmsDefaults.greedy.key:
-        algorithmFunc = greedy;
-        break;
-      case algorithmsDefaults.schildFredman.key:
-        algorithmFunc = schildFredman;
-        break;
-      case algorithmsDefaults.aco.key:
-        algorithmFunc = antColony;
-        break;
-      default:
-        algorithmFunc = null;
-    }
-    if (!algorithmFunc) {
-      throw new Error('Algorithm was not selected!');
-    }
+    const algorithmFunc = getAlgorithm(algorithm);
 
     const schedule = algorithmFunc(params);
 
@@ -62,5 +40,5 @@ const getResult = ({ algorithms, numOfRandomJobs, ...params }) => {
 };
 
 module.exports = {
-  getResult
+  getAlgorithmsResult: getResults
 };
