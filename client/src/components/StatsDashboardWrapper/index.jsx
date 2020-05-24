@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -53,7 +54,10 @@ const StatsDashboardWrapper = (props) => {
 
     setInProgress(true);
     handleSubmit(algorithmInfo)
-      .then((results) => setResults({ params: results }))
+      .then((results) => {
+        setResults({ params: results });
+        setError(null);
+      })
       .catch((error) => {
         setError(error);
         setResults(null);
@@ -104,6 +108,11 @@ const StatsDashboardWrapper = (props) => {
                   Submit
                 </Button>
               </div>
+              {error && (
+                <Typography className={styles.errorMessage}>
+                  {error}
+                </Typography>
+              )}
             </div>
           );
         }}
