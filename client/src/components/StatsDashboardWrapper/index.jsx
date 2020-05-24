@@ -20,6 +20,7 @@ const StatsDashboardWrapper = (props) => {
     dataFormInitialValues,
     dataFormValidationSchema,
     plot: Plot,
+    isACO,
     onSubmit: handleSubmit
   } = props;
 
@@ -69,9 +70,9 @@ const StatsDashboardWrapper = (props) => {
       <Formik
         initialValues={{
           ...dataFormInitialValues,
-          [algorithms.greedy.key]: true,
-          [algorithms.schildFredman.key]: false,
-          [algorithms.aco.key]: false,
+          [algorithms.greedy.key]: !isACO && true,
+          [algorithms.schildFredman.key]: !isACO && false,
+          [algorithms.aco.key]: isACO,
           numOfAnts: defaults.numOfAnts,
           pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
           heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
@@ -91,7 +92,7 @@ const StatsDashboardWrapper = (props) => {
           return (
             <div className={styles.dataForm}>
               {dataForm}
-              <AlgorithmChoice isACO={values.aco} />
+              {!isACO && <AlgorithmChoice isACO={values.aco} />}
               <div>
                 <Button
                   disabled={errorsExist || !areAlgorithmsSelected}
@@ -118,6 +119,7 @@ StatsDashboardWrapper.propTypes = {
   dataFormInitialValues: PropTypes.object.isRequired,
   dataFormValidationSchema: PropTypes.objectOf(PropTypes.object).isRequired,
   plot: PropTypes.elementType.isRequired,
+  isACO: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired
 };
 

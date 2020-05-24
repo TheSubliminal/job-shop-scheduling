@@ -26,3 +26,12 @@ export const getNumOfJobsStats = async params => {
   });
   return response.json();
 };
+
+export const getNumOfAntsStats = async params => {
+  const response = await callWebApi({
+    endpoint: '/api/stats/num-of-ants',
+    type: 'POST',
+    requestData: params
+  });
+  return response.json();
+};
