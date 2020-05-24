@@ -11,7 +11,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import styles from './styles.module.scss';
 
-const DataFormExpansionPanel = ({ title, isLoading, children }) => {
+const DataFormExpansionPanel = ({
+  title,
+  description,
+  isLoading,
+  children
+}) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const toggleExpanded = () => setIsExpanded(prevIsExpanded => !prevIsExpanded);
@@ -19,7 +24,8 @@ const DataFormExpansionPanel = ({ title, isLoading, children }) => {
   return (
     <ExpansionPanel expanded={isExpanded} onChange={toggleExpanded}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>{title}</Typography>
+        <Typography className={styles.title}>{title}</Typography>
+        {description && <Typography className={styles.description}>{description}</Typography>}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={styles.algorithmData}>
         {children}
@@ -35,6 +41,7 @@ const DataFormExpansionPanel = ({ title, isLoading, children }) => {
 
 DataFormExpansionPanel.propTypes = {
   title: PropTypes.string.isRequired,
+  description: PropTypes.string,
   isLoading: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

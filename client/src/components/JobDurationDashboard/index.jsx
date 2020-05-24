@@ -29,7 +29,8 @@ const JobDurationDashboard = () => {
 
   return (
     <StatsDashboardWrapper
-      title='Job Duration'
+      title='Job Duration VS Delay'
+      description='Correlation between delay and maximum job duration'
       dataForm={<JobDurationDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}

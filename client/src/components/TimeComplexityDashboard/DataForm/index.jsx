@@ -3,11 +3,11 @@ import Typography from '@material-ui/core/Typography';
 
 import FromToStepFields from '../../FromToStepFields';
 
-const ExecutionTimeDataForm = () => (
+const TimeComplexityDataForm = () => (
   <>
     <Typography>Number of jobs</Typography>
     <FromToStepFields />
   </>
 );
 
-export default ExecutionTimeDataForm;
+export default TimeComplexityDataForm;

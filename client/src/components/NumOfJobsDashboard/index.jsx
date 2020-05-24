@@ -21,7 +21,8 @@ const NumOfJobsDashboard = () => {
 
   return (
     <StatsDashboardWrapper
-      title='Number Of Jobs'
+      title='Number Of Jobs VS Delay'
+      description='Correlation between delay and number of jobs in problem'
       dataForm={<NumOfJobsDataForm />}
       dataFormInitialValues={initialValues}
       dataFormValidationSchema={validationSchema}

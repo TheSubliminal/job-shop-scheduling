@@ -13,6 +13,7 @@ import { algorithmChoiceValidationSchema } from '../../config/validation';
 const StatsDashboardWrapper = (props) => {
   const {
     title,
+    description,
     dataForm,
     dataFormInitialValues,
     dataFormValidationSchema,
@@ -56,7 +57,11 @@ const StatsDashboardWrapper = (props) => {
   };
 
   return (
-    <DataFormExpansionPanel title={title} isLoading={inProgress}>
+    <DataFormExpansionPanel
+      title={title}
+      description={description}
+      isLoading={inProgress}
+    >
       <Formik
         initialValues={{
           ...dataFormInitialValues,
@@ -102,6 +107,7 @@ const StatsDashboardWrapper = (props) => {
 
 StatsDashboardWrapper.propTypes = {
   title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   dataForm: PropTypes.element.isRequired,
   dataFormInitialValues: PropTypes.object.isRequired,
   dataFormValidationSchema: PropTypes.objectOf(PropTypes.object).isRequired,
