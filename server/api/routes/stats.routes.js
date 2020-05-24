@@ -1,6 +1,8 @@
 const { Router } = require('express');
 
 const { getTimeComplexityResults } = require('../services/timeCompexity.service');
+const { getJobDurationResults } = require('../services/jobDuration.service');
+
 
 const router = Router();
 
@@ -11,7 +13,7 @@ router
     res.send(result);
   })
   .post('/job-duration', (req, res) => {
-    const result = getResult(req.body);
+    const result = getJobDurationResults(req.body);
 
     res.send(result);
   })
