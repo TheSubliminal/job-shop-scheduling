@@ -14,13 +14,12 @@ const getResults = ({ algorithms, from, to, step, numOfJobsInExperiment, ...para
   }
 
   const results = algorithms.map((algorithm) => {
-    const algorithmExecutionResults = [];
     const algorithmFunc = getAlgorithm(algorithm);
-    randomExperimentsInfo.forEach((randomExperimentInfo) => {
+    const algorithmExecutionResults = randomExperimentsInfo.map((randomExperimentInfo) => {
       params.jobs = randomExperimentInfo.randomExperiment;
       const schedule =  algorithmFunc(params);
       const totalDelay = calculateScheduleDelay(schedule);
-      algorithmExecutionResults.push([randomExperimentInfo.maxJobDuration, totalDelay]);
+      return [randomExperimentInfo.maxJobDuration, totalDelay];
     });
 
     return {
