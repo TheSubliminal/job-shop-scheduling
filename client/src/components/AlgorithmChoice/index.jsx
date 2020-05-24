@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { FormControlLabel, Checkbox, FormGroup, Typography } from '@material-ui/core';
 
+import ACOAdditionalData from '../ACOAdditionalData';
 import algorithmsConfig from '../../config/algorithms.json';
 
-const AlgorithmChoice = () => (
+const AlgorithmChoice = ({ isACO }) => (
   <>
     <Typography>Choose algorithm</Typography>
     <FormGroup>
@@ -19,7 +21,12 @@ const AlgorithmChoice = () => (
         </Field>
       ))}
     </FormGroup>
+    {isACO && <ACOAdditionalData />}
   </>
 );
+
+AlgorithmChoice.propTypes = {
+  isACO: PropTypes.bool
+};
 
 export default AlgorithmChoice;

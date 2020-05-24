@@ -15,10 +15,10 @@ import {
 
 import InputDataTable from '../InputDataTable';
 import NumOfRandomJobsInput from '../NumOfRandomJobsInput';
-import problem5jobs from '../../config/problems/problem5jobs.json';
-import problem10jobs from '../../config/problems/problem10jobs.json';
-import problem20jobs from '../../config/problems/problem20jobs.json';
-import problem35jobs from '../../config/problems/problem35jobs.json';
+import problem5jobs from '../../../config/problems/problem5jobs.json';
+import problem10jobs from '../../../config/problems/problem10jobs.json';
+import problem20jobs from '../../../config/problems/problem20jobs.json';
+import problem35jobs from '../../../config/problems/problem35jobs.json';
 
 import styles from './styles.module.scss';
 
@@ -113,35 +113,39 @@ const DataForm = ({ jobs, isRandom, setJobs }) => {
             />
           )}
         </Field>
-        <input
-          id='file-upload'
-          type='file'
-          accept='.json'
-          className={styles.fileUpload}
-          onChange={onFileUpload}
-        />
-        <label htmlFor='file-upload'>
-          <Button
-            color='primary'
-            component='span'
-            variant='contained'
-          >
-            Upload from .JSON
-          </Button>
-        </label>
-        <br />
-        <FormControl className={styles.predefinedProblemSelect}>
-          <InputLabel>Select problem</InputLabel>
-          <Select
-            size='small'
-            value={predefinedProblem}
-            onChange={onChangePredefinedProblem}
-          >
-            {predefinedProblems.map(({ name }) => (
-              <MenuItem key={name} value={name}>{name}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        {!isRandom && (
+          <>
+            <input
+              id='file-upload'
+              type='file'
+              accept='.json'
+              className={styles.fileUpload}
+              onChange={onFileUpload}
+            />
+            <label htmlFor='file-upload'>
+              <Button
+                color='primary'
+                component='span'
+                variant='contained'
+              >
+                Upload from .JSON
+              </Button>
+            </label>
+            <br />
+            <FormControl className={styles.predefinedProblemSelect}>
+              <InputLabel>Select problem</InputLabel>
+              <Select
+                size='small'
+                value={predefinedProblem}
+                onChange={onChangePredefinedProblem}
+              >
+                {predefinedProblems.map(({ name }) => (
+                  <MenuItem key={name} value={name}>{name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </>
+        )}
         {fileError && (
           <FormHelperText error>
             {fileError}

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import algorithms from '../../config/algorithms.json';
+import algorithms from '../../../config/algorithms.json';
 
 import styles from './styles.module.scss';
 
