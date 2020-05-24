@@ -82,7 +82,8 @@ const antColony = (params) => {
     numOfAnts = defaults.numOfAnts,
     pheromoneSignificanceCoef = defaults.pheromoneSignificanceCoef,
     heuristicSignificanceCoef = defaults.heuristicSignificanceCoef,
-    pheromoneEvaporationCoef = defaults.pheromoneEvaporationCoef
+    pheromoneEvaporationCoef = defaults.pheromoneEvaporationCoef,
+    isIterationsInfoNecessary = defaults.isIterationsInfoNecessary
   } = params;
 
   let currentScheduleRecord = [...jobs];
@@ -102,7 +103,8 @@ const antColony = (params) => {
     }
   }
 
-  for (let ant = 0; ant < numOfAnts; ant++) {
+  const antIterations = [];
+  for (let ant = 0; ant < numOfAnts && currentTotalDelayRecord > 0; ant++) {
     const staticRandomParameter = Math.random().toFixed(6);
 
     const notVisitedJobs = [...currentScheduleRecord];
@@ -150,12 +152,20 @@ const antColony = (params) => {
     }
 
     const newTotalDelay = calculateScheduleDelay(newSchedule);
+    antIterations.push([
+      ant + 1,
+      newTotalDelay
+    ]);
     if (newTotalDelay < currentTotalDelayRecord) {
       currentScheduleRecord = newSchedule;
       currentTotalDelayRecord = newTotalDelay;
     }
   }
-  return currentScheduleRecord;
+  if (isIterationsInfoNecessary) {
+    return antIterations;
+  } else {
+    return currentScheduleRecord;
+  }
 };
 
 module.exports = {
