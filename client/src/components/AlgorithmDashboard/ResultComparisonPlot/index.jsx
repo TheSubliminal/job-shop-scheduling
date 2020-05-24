@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import algorithms from '../../config/algorithms.json';
+import algorithms from '../../../config/algorithms.json';
+
+import styles from './styles.module.scss';
 
 const algorithmKeys = Object.values(algorithms).map(({ key }) => key);
 
@@ -77,7 +79,7 @@ const ResultComparisonPlot = ({ schedules }) => {
   };
 
   return (
-    <>
+    <div className={styles.plotContainer}>
       <HighchartsReact
         options={totalDelayOptions}
         highcharts={Highcharts}
@@ -86,7 +88,7 @@ const ResultComparisonPlot = ({ schedules }) => {
         options={jobDelayOptions}
         highcharts={Highcharts}
       />
-    </>
+    </div>
   );
 };
 

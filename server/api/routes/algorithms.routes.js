@@ -1,11 +1,11 @@
 const { Router } = require('express');
 
-const { getResult } = require('../services/algorithms.service');
+const { getAlgorithmsResults } = require('../services/algorithms.service');
 
 const router = Router();
 
 router.post('/', (req, res) => {
-  const result = getResult(req.body);
+  const result = getAlgorithmsResults(req.body);
 
   res.send(result);
 });

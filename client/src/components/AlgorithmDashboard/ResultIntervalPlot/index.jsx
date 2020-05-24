@@ -4,11 +4,13 @@ import Highcharts from 'highcharts';
 import highchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 
-import algorithms from '../../config/algorithms.json';
+import algorithms from '../../../config/algorithms.json';
+
+import styles from './styles.module.scss';
 
 const algorithmNames = Object.values(algorithms).map(({ name }) => name);
 
-const ResultIntervalPlot = ({ schedule, algorithm }) => {
+const ResultIntervalPlot = ({ schedule, algorithm, className }) => {
   const jobIDs = schedule.map(job => job.id);
 
   const series = [
@@ -46,10 +48,12 @@ const ResultIntervalPlot = ({ schedule, algorithm }) => {
   };
 
   return (
-    <HighchartsReact
-      options={options}
-      highcharts={highchartsMore(Highcharts)}
-    />
+    <div className={styles.plotContainer}>
+      <HighchartsReact
+        options={options}
+        highcharts={highchartsMore(Highcharts)}
+      />
+    </div>
   );
 };
 
