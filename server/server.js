@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const fs = require('fs');
 
 const setupApiRoutes = require('./api/routes');
 const errorHandlerMiddleware = require('./api/middlewares/errorHandler.middleware');
@@ -20,7 +19,7 @@ app.use(errorHandlerMiddleware);
 setupApiRoutes(app);
 
 app.get('*', (req, res) => {
-  res.sendFile(fs.readFileSync(`${__dirname}/../client/build/index.html`));
+  res.sendFile(path.resolve(`${__dirname}/../client/build/index.html`));
 });
 
 app.listen(port, () => {

@@ -16,7 +16,7 @@ const Routing = () => (
         <Route exact path='/'>
           <AlgorithmDashboard />
         </Route>
-        <Route exact path='/stats'>
+        <Route exact path='/experiments'>
           <Stats />
         </Route>
       </Switch>
