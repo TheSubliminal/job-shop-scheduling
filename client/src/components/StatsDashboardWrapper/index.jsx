@@ -66,6 +66,7 @@ const StatsDashboardWrapper = (props) => {
       title={title}
       description={description}
       isLoading={inProgress}
+      defaultOpen={false}
     >
       <Formik
         initialValues={{
