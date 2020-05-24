@@ -15,6 +15,8 @@ import defaults from '../../config/default.json';
 import { positiveError, requiredError, maxError } from '../../config/errorMessages.json';
 import { algorithmChoiceValidationSchema } from '../../config/validation';
 
+import styles from './styles.module.scss';
+
 const jobSchema = Yup.object().shape({
   duration: Yup.number()
     .positive(positiveError)
@@ -125,7 +127,7 @@ class AlgorithmDashboard extends React.Component {
               const areAlgorithmsSelected = values.greedy || values.schildFredman || values.aco;
 
               return (
-                <>
+                <div className={styles.dataForm}>
                   <DataForm
                     jobs={values.jobs}
                     isRandom={values.isRandom}
@@ -143,7 +145,7 @@ class AlgorithmDashboard extends React.Component {
                       Submit
                     </Button>
                   </div>
-                </>
+                </div>
               );
             }}
           </Formik>

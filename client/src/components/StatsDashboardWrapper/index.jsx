@@ -10,6 +10,8 @@ import defaults from '../../config/default.json';
 import algorithms from '../../config/algorithms.json';
 import { algorithmChoiceValidationSchema } from '../../config/validation';
 
+import styles from './styles.module.scss';
+
 const StatsDashboardWrapper = (props) => {
   const {
     title,
@@ -31,14 +33,15 @@ const StatsDashboardWrapper = (props) => {
       numOfAnts,
       pheromoneSignificanceCoef,
       heuristicSignificanceCoef,
-      pheromoneEvaporationCoef
+      pheromoneEvaporationCoef,
+      ...data
     } = values;
 
     const selectedAlgorithms = Object.values(algorithms)
       .filter(({ key }) => values[key])
       .map(({ key }) => key);
 
-    const algorithmInfo = { algorithms: selectedAlgorithms };
+    const algorithmInfo = { algorithms: selectedAlgorithms, ...data };
 
     if (aco) {
       algorithmInfo.numOfAnts = numOfAnts;
@@ -86,7 +89,7 @@ const StatsDashboardWrapper = (props) => {
           const areAlgorithmsSelected = values.greedy || values.schildFredman || values.aco;
 
           return (
-            <>
+            <div className={styles.dataForm}>
               {dataForm}
               <AlgorithmChoice isACO={values.aco} />
               <div>
@@ -99,11 +102,11 @@ const StatsDashboardWrapper = (props) => {
                   Submit
                 </Button>
               </div>
-            </>
+            </div>
           );
         }}
       </Formik>
-      <Plot {...results} />
+      {results && <Plot {...results} />}
     </DataFormExpansionPanel>
   );
 };
