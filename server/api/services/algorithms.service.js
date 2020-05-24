@@ -40,5 +40,5 @@ const getResults = ({ algorithms, numOfRandomJobs, ...params }) => {
 };
 
 module.exports = {
-  getAlgorithmsResult: getResults
+  getAlgorithmsResults: getResults
 };
