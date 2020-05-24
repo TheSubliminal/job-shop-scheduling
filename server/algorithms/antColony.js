@@ -86,6 +86,8 @@ const antColony = (params) => {
     isIterationsInfoNecessary = defaults.isIterationsInfoNecessary
   } = params;
 
+  const staticRandomParameter = Math.random().toFixed(6);
+
   let currentScheduleRecord = [...jobs];
   let currentTotalDelayRecord = calculateScheduleDelay(currentScheduleRecord);
 
@@ -105,7 +107,6 @@ const antColony = (params) => {
 
   const antIterations = [];
   for (let ant = 0; ant < numOfAnts && currentTotalDelayRecord > 0; ant++) {
-    const staticRandomParameter = Math.random().toFixed(6);
 
     const notVisitedJobs = [...currentScheduleRecord];
     const newSchedule = new Array(currentScheduleRecord.length);
