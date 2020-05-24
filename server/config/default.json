@@ -3,5 +3,6 @@
   "pheromoneSignificanceCoef": 1.3,
   "heuristicSignificanceCoef": 1.2,
   "pheromoneEvaporationCoef": 0.1,
+  "randomNumOfJobs" : 10,
   "randomMaxJobDuration": 20
 }
