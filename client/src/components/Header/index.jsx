@@ -14,7 +14,7 @@ const Header = () => (
           </NavLink>
         </Typography>
         <Typography className={styles.navLink}>
-          <NavLink to='/stats' activeClassName={styles.active}>
+          <NavLink to='/experiments' activeClassName={styles.active}>
             Experiments
           </NavLink>
         </Typography>
