@@ -4,14 +4,20 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 const NumOfAntsPlot = ({ params }) => {
-
   const options = {
     plotOptions: {
       line: {
         dataLabels: {
           enabled: true
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size: 10px">Ant №{point.x}</span><br/>',
+          pointFormat: '<span style="color:{point.color}">●</span> Delay: {point.y}<br/>'
         }
       }
+    },
+    legend: {
+      enabled: false
     },
     title: {
       text: 'Number of ants VS Delay'
@@ -27,7 +33,9 @@ const NumOfAntsPlot = ({ params }) => {
         text: 'Delay'
       }
     },
-    series: params
+    series: [{
+      data: params
+    }]
   };
 
   return (
