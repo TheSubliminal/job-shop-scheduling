@@ -15,9 +15,10 @@ const DataFormExpansionPanel = ({
   title,
   description,
   isLoading,
+  defaultOpen = true,
   children
 }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(defaultOpen);
 
   const toggleExpanded = () => setIsExpanded(prevIsExpanded => !prevIsExpanded);
 
@@ -43,6 +44,7 @@ DataFormExpansionPanel.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   isLoading: PropTypes.bool,
+  defaultOpen: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

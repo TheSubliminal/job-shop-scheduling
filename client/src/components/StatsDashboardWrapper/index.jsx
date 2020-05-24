@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -20,6 +21,7 @@ const StatsDashboardWrapper = (props) => {
     dataFormInitialValues,
     dataFormValidationSchema,
     plot: Plot,
+    isACO,
     onSubmit: handleSubmit
   } = props;
 
@@ -52,7 +54,10 @@ const StatsDashboardWrapper = (props) => {
 
     setInProgress(true);
     handleSubmit(algorithmInfo)
-      .then((results) => setResults({ params: results }))
+      .then((results) => {
+        setResults({ params: results });
+        setError(null);
+      })
       .catch((error) => {
         setError(error);
         setResults(null);
@@ -65,13 +70,14 @@ const StatsDashboardWrapper = (props) => {
       title={title}
       description={description}
       isLoading={inProgress}
+      defaultOpen={false}
     >
       <Formik
         initialValues={{
           ...dataFormInitialValues,
-          [algorithms.greedy.key]: true,
-          [algorithms.schildFredman.key]: false,
-          [algorithms.aco.key]: false,
+          [algorithms.greedy.key]: !isACO && true,
+          [algorithms.schildFredman.key]: !isACO && false,
+          [algorithms.aco.key]: isACO,
           numOfAnts: defaults.numOfAnts,
           pheromoneSignificanceCoef: defaults.pheromoneSignificanceCoef,
           heuristicSignificanceCoef: defaults.heuristicSignificanceCoef,
@@ -91,7 +97,7 @@ const StatsDashboardWrapper = (props) => {
           return (
             <div className={styles.dataForm}>
               {dataForm}
-              <AlgorithmChoice isACO={values.aco} />
+              {!isACO && <AlgorithmChoice isACO={values.aco} />}
               <div>
                 <Button
                   disabled={errorsExist || !areAlgorithmsSelected}
@@ -102,6 +108,11 @@ const StatsDashboardWrapper = (props) => {
                   Submit
                 </Button>
               </div>
+              {error && (
+                <Typography className={styles.errorMessage}>
+                  {error}
+                </Typography>
+              )}
             </div>
           );
         }}
@@ -118,6 +129,7 @@ StatsDashboardWrapper.propTypes = {
   dataFormInitialValues: PropTypes.object.isRequired,
   dataFormValidationSchema: PropTypes.objectOf(PropTypes.object).isRequired,
   plot: PropTypes.elementType.isRequired,
+  isACO: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired
 };
 

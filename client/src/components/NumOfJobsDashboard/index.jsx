@@ -12,7 +12,6 @@ const NumOfJobsDashboard = () => {
     from: defaults.numOfJobsFrom,
     to: defaults.numOfJobsTo,
     step: defaults.numOfJobsStep,
-    numOfAnts: defaults.numOfAnts,
   };
 
   const validationSchema = getFromToStepValidation({

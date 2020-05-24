@@ -19,6 +19,9 @@ const NumOfJobsPlot = ({ params }) => {
       line: {
         dataLabels: {
           enabled: true
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size: 10px">{point.x} job(s)</span><br/>'
         }
       }
     },

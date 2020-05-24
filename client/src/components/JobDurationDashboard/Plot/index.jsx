@@ -19,6 +19,9 @@ const JobDurationPlot = ({ params }) => {
       line: {
         dataLabels: {
           enabled: true
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size: 10px">Max job duration: {point.x}</span><br/>'
         }
       }
     },
